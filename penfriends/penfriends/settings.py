@@ -27,7 +27,7 @@ SECRET_KEY = str(os.getenv("SECRET_KEY"))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(os.getenv("DEBUG_STATUS"))
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*'] #need to add this '*' for my server to run? why?
 
 
 # Application definition
