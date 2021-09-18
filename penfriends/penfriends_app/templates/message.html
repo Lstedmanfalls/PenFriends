@@ -17,12 +17,28 @@
             <br>  
             <a href="/dashboard/{{this_user.id}}">Dashboard</a>
             <br>
-            <a href="/inbox/{{this_user.id}}">Inbox({{this_user.messages.count}})</a>
+            <a href="/inbox/{{this_user.id}}">Inbox({{this_user.messages.unread.count}})</a>
             <br>
         </div>
-        
+        <div class="messagebuttons">
+            <br>
+            <a href="/message/compose" class="button">Reply</a>
+            <br>
+            <a href="/message/{{message.id}}/mark_read" class="button">Mark read</a>
+            <br>
+            <a href="/message/{{message.id}}/delete" class="button">Delete</a>
+        </div>
         <div class="body">
-    
+            <h3>Message</h3>
+            <br>
+            <br>
+            <p>From: {{this_message.author}}</p>
+            <p>Date: {{this_message.created}}</p>
+            <p>Subject: {{this_message.subject}}</p>
+            <br>
+            <p>{{this_message.body}}</p>
+            <br>
+            <a href="/message/{{message.id}}" class="button">Download attachment</a>
         </div>
 </body>
 </html>
