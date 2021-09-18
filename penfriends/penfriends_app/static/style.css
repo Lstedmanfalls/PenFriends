@@ -1,0 +1,44 @@
+/*Mobile responsiveness breakpoints: 
+Mobile (< 480px)
+Tablet (480px to 768px)
+PC (>= 769) */
+
+*{
+    margin:0;
+    padding:0;
+}
+
+html{
+    font-family:Verdana, Tahoma, sans-serif;
+    font-size:10px;
+}
+
+@media only screen and (max-width:768px){
+html{
+    font-size:8px;
+}
+}
+
+@media only screen and (max-width:480px){
+html{
+    font-size:8px;
+}
+}
+
+h1{
+    font-size:4rem;
+    text-align:center;
+    padding-top:3rem;
+}
+
+p{
+    font-size:1.5rem;
+}
+
+a{
+    font-size:2rem
+}
+
+#container{
+    width:90%;
+}
