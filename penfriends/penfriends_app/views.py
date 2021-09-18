@@ -1,6 +1,6 @@
-from penfriends.penfriends_app.models import Message
-from django.shortcuts import render
 
+from django.shortcuts import render
+from .models import Resident,Message,Post
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib import messages
 from login_registration_app.models import User
@@ -46,3 +46,5 @@ def mark_read(request, message_id):
     return redirect("/inbox")
 
     # end mark's views
+def new_message(reqeust):
+    pass
