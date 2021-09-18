@@ -30,6 +30,7 @@ class Message(models.Model):
     subject = models.CharField(max_length=255)
     content = models.TextField()
     attachment = models.FileField(upload_to='media')
+    unread = models.BooleanField(default=True)
     creator = models.ForeignKey(User, related_name="messages", on_delete = models.CASCADE)
     recipient = models.ForeignKey(Resident, related_name="res_messages", on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
