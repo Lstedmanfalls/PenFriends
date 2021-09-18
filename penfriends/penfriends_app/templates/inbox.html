@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{this_user.first_name}}'s inbox</title>
+</head>
+<body>
+    <div class="container">
+    
+        <div class="sidebar">
+            <br>
+            <a href="/penfriends">Seeking PenFriends</a>
+            <br>  
+            <a href="/dashboard/{{this_user.id}}">Dashboard</a>
+            <br>
+            <a href="/inbox/{{this_user.id}}">Inbox({{this_user.messages.count}})</a>
+            <br>
+        </div>
+        
+        <div class="body">
+    
+        </div>
+</body>
+</html>
