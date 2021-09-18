@@ -17,12 +17,31 @@
             <br>  
             <a href="/dashboard/{{this_user.id}}">Dashboard</a>
             <br>
-            <a href="/inbox/{{this_user.id}}">Inbox({{this_user.messages.count}})</a>
+            <a href="/inbox/{{this_user.id}}">Inbox({{this_user.messages.unread.count}})</a>
             <br>
         </div>
         
         <div class="body">
-    
+            <h3>Inbox</h3>
+            <table>
+                <thead>
+                    <td>Subject:</td>
+                    <td>From:</td>
+                    <td>Date:</td>
+                    <td>Attachment:</td>
+                    <td>Actions:</td>
+                </thead>
+                {% for message in user_messages %}
+                    <tr>
+                        <td>{{message.subject}}</td>
+                        <td>{{message.sender}}</td>
+                        <td>{{message.created}}</td>
+                        {% if message.attachment == null %}<td>y</td>{% else %}<td>n</td>{% endif %}
+                        <td><a href="/message/{{message.id}}">View</a>|<a href="/message/{{message.id}}/mark_read">Mark read</a>|<a href="/message/{{message.id}}/delete">Delete</a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <a class="button" href="/message/new">Compose new message</a>
         </div>
 </body>
 </html>
