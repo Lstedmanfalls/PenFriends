@@ -38,5 +38,6 @@ class Post(models.Model):
     title = models.CharField(max_length=255)
     body = models.TextField()
     maker = models.ForeignKey(User, related_name="posts", on_delete = models.CASCADE)
+    #resident_for = models.ForeignKey(Resident, related_name="res_posts", on_delete=models.CASCADE)?
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
