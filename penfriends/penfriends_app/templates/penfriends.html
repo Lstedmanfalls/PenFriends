@@ -11,8 +11,23 @@
 </head>
 <body>
     <div id="wrapper">
-        <h1>Penfriends</h1>
-        <a href ="/logout">Logout</a>
+        <div id ="container">
+            <h1>Seeking PenFriends</h1>
+            <div id="post_block">
+                <div id="post">
+                    <!-- for post in all the posts -->
+                    <!-- post.resident.image -->
+                    <!-- post.title -->
+                    <!-- post.body -->
+                    <form action="create canned message" method="POST">
+                    {% csrf_token %}
+                        <input name="resident_id" type="hidden" value="post.resident.id">
+                        <input name="maker_id" type="hidden" value = "post.maker.id">
+                        <button type="submit">Become {resident.name}'s PenFriend</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>
