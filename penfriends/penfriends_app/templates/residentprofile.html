@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'adminstyle.css' %}">
+    <title>Resident Profile</title>
+</head>
+<body>
+    <div class="container">
+    
+        <div class="sidebar">
+            <br>
+            <a href="/penfriends">Seeking PenFriends</a>
+            <br>  
+            <a href="/penfriends/dashboard/{{this_user.id}}">Dashboard</a>
+            <br>
+            <a href="/inbox/{{this_user.id}}">Inbox({{this_user.messages.unread.count}})</a>
+            <br>
+        </div>
+        
+        <div class="body">
+            <h2>{{this_resident.first_name}} {{this_resident.last_name}}</h2>
+        {% if this_user.id == this_resident.creator.id %}
+            <form  class="sub_body" action="/penfriends/resident/{{this_resident.id}}/updateresident" method="Post" enctype="multipart/form-data">
+                
+                {%csrf_token%}
+                <img id="profilepicture" src="{{ this_resident.picture.url }}" alt="profile pic">
+                <div class="form-group">
+                    <label for="picture">Picture</label>
+                    <input type="file" name="picture" accept="image/*">
+                </div>
+                <div class="form-group">
+                    <label for="first_name">First Name</label>
+                    <input type="text" name="first_name" value="{{this_resident.first_name}}">
+                </div>
+                <div class="form-group">
+                    <label for="last_name">Last Name</label>
+                    <input type="text" name="last_name" value="{{this_resident.last_name}}">
+                </div>
+                <div class="form-group">
+                    <label for="bio">Bio</label>
+                    <textarea name="bio">{{this_resident.bio}}</textarea>
+                </div>
+                
+                <button class="btn btn-success btn-sm">Update</button>
+                <form action="/penfriends/resident/{{this_resident.id}}/{{this_user.id}}/delete" method="post">
+                    {% csrf_token %}
+                    <button class="btn btn-danger btn-sm">Delete</button>
+                </form>
+                {% if messages %}
+                <div class="alert alert-warning" role="alert">
+                    
+                    <ul class="messages">    
+                        {% for message in messages %}    
+                            <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>    
+                        {% endfor %}
+                    </ul>
+                    
+                </div>
+                {% endif %}
+
+            </form>
+        {% endif %}
+        {% if this_user.id != this_resident.creator.id %}
+            <img id="profilepicture" src="{{ this_resident.picture.url }}" alt="profile pic">
+            <p>First Name: {{this_resident.first_name}}</p>
+            <p>Last Name: {{this_resident.last_name}}</p>
+            <p>Bio: {{this_resident.bio}}</p>
+        {% endif %}    
+        </div>
+    </div>    
+</body>
+</html>

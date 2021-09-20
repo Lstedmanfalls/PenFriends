@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'adminstyle.css' %}">
+    <title>Admin Dashboard</title>
+</head>
+<body>
+    <div class="container">
+    
+        <div class="sidebar">
+            <br>
+            <a href="/penfriends">Seeking PenFriends</a>
+            <br>  
+            <a href="/dashboard/{{this_user.id}}">Dashboard</a>
+            <br>
+            <a href="/inbox/{{this_user.id}}">Inbox({{this_user.messages.unread.count}})</a>
+            <br>
+        </div>
+        
+        <div class="body">
+            Hi, {{this_user.category}} {{this_user.first_name}} {{this_user.last_name}}
+            <form  class="sub_body" action="/penfriends/dashboard/{{this_user.id}}/createresident" method="Post" enctype="multipart/form-data">
+                <h2>Add New Resident</h2>
+                {%csrf_token%}
+                
+                <div class="form-group">
+                    <label for="first_name">First Name</label>
+                    <input type="text" name="first_name">
+                </div>
+                <div class="form-group">
+                    <label for="last_name">Last Name</label>
+                    <input type="text" name="last_name">
+                </div>
+                <div class="form-group">
+                    <label for="bio">Bio</label>
+                    <textarea name="bio"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="picture">Picture</label>
+                    <input type="file" name="picture" accept="image/*">
+                </div>
+                <button class="btn btn-primary">Add Resident</button>
+                {% if messages %}
+                <div class="alert alert-warning" role="alert">
+                    
+                    <ul class="messages">    
+                        {% for message in messages %}    
+                            <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>    
+                        {% endfor %}
+                    </ul>
+                    
+                </div>
+                {% endif %}
+
+            </form>
+            <div class="sub_body">
+                <h3>My Residents</h3>
+                
+                    {% for resident in this_user.residents.all %}
+                    <ul><a href='/penfriends/resident/{{resident.id}}'>{{resident.first_name}} {{resident.last_name}}</a>
+                        <form action="/penfriends/resident/{{resident.id}}/{{this_user.id}}/delete" method="post">
+                            {% csrf_token %}
+                            <button class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    </ul>
+                    {% endfor%}
+               
+                
+            </div>
+            
+        </div>
+        <div class="body">
+            
+            <form class="sub_body" action="/penfriends/dashboard/{{this_user.id}}/createpost" method="Post">
+                <h2>Add New Post</h2>
+                {%csrf_token%}
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" name="title">
+                </div>
+                <div class="form-group">
+                    <label for="for_resident">Choose a resident:</label>
+
+                    <select name="for_resident" >
+                        {% for resident in this_user.residents.all%}
+                    <option value="{{resident.id}}">{{resident.first_name}} {{resident.last_name}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="body">Body</label>
+                    <textarea name="body"></textarea>
+                </div>
+                <button class="btn btn-primary">Add Post</button>
+                {% if messages %}
+                <div class="alert alert-warning" role="alert">
+                    
+                    <ul class="messages">    
+                        {% for message in messages %}    
+                            <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>    
+                        {% endfor %}
+                    </ul>
+                    
+                </div>
+                {% endif %}
+                
+            </form>
+            <div class="sub_body">
+                <h3>My Posts</h3>
+            {% for resident in this_user.residents.all %}
+                {% for post in resident.res_posts.all %}
+                
+                    <form action="/penfriends/resident/{{this_user.id}}/{{post.id}}/updatepost" method="Post">
+                        {%csrf_token%}
+                        <div class="form-group">
+                            <label for="title">Title</label>
+                            <input type="text" name="title" value="{{post.title}}">
+                        </div>
+                        <p>For Resident: {{post.for_resident.first_name}} {{post.for_resident.last_name}}</p>
+                        <div class="form-group">
+                            <label for="body">Body</label>
+                            <textarea name="body">{{post.body}}</textarea>
+                        </div>
+                        <button class="btn btn-success btn-sm">Update</button>
+                    </form>
+                    <form action="/penfriends/resident/{{this_user.id}}/{{post.id}}/deletepost" method="post">
+                        {% csrf_token %}
+                        <button class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                {% endfor %}
+            {% endfor %}
+            </div>
+            
+        </div>
+    </div>    
+</body>
+</html>

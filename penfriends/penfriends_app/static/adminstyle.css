@@ -1,0 +1,26 @@
+*{
+    margin:0;
+    padding:0;
+}
+.container{
+    display:flex;
+    justify-content: space-evenly;
+    padding: 20px;
+}
+.body{
+    margin:20px;
+}
+.sub_body{
+    padding: 10px;
+    border: 2px solid rgb(206, 222, 241);
+    margin: 15px;
+    
+}
+ul{
+    display:flex;
+    justify-content: space-around;
+}
+img{
+    width: 400px;
+    
+}

@@ -9,7 +9,7 @@ from login_registration_app.models import User
     #Resident.objects.create(
         #all fields except penfriends
     #)
-#a list of residents when User.category="Penpal"
+#a list of penpal_residents when User.category="Penpal"
 #a list of messages when User.category="Penpal"
 #a list of posts when User.category="Admin"
 
