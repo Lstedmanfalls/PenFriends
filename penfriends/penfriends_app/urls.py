@@ -15,4 +15,17 @@ urlpatterns = [
     path('message/<int:message_id>/mark_read', views.mark_read),
 
     # end mark's urls 
+    
+    #julie's urls
+    path('/dashboard/<int:user_id>',views.userdash),
+    path('/dashboard/<int:user_id>/createresident',views.createresident),
+    path('/dashboard/<int:user_id>/createpost',views.createpost),
+    path('/resident/<int:user_id>/<int:post_id>/updatepost',views.updatepost),
+    path('/resident/<int:user_id>/<int:post_id>/deletepost',views.deletepost),
+    path('/resident/<int:resident_id>',views.residentprofile),
+    path('/resident/<int:resident_id>/updateresident',views.updateresident),
+    path('/resident/<int:resident_id>/<int:user_id>/delete',views.deleteresident),
+    path('/message/new_message',views.new_messagepage),
+    path('/message/new_message/create',views.createmessage),
+    #end julie's urls
 ]
