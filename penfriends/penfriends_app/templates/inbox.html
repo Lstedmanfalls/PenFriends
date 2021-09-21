@@ -6,21 +6,21 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{this_user.first_name}}'s inbox</title>
+    <title>{{this_user.first_name}}'s Inbox</title>
 </head>
 <body>
     <div class="container">
-    
-        <div class="sidebar">
-            <br>
+        <nav>
             <a href="/penfriends">Seeking PenFriends</a>
-            <br>  
-            <a href="/dashboard/{{this_user.id}}">Dashboard</a>
-            <br>
-            <a href="/inbox/{{this_user.id}}">Inbox({{this_user.messages.unread.count}})</a>
-            <br>
-        </div>
-        
+            {% if this_user.category == "admin" %}
+            <a href="/penfriends/dashboard/admin">My Admin Dashboard</a>
+            {% endif %}
+            {% if this_user.category == "penpal" %}
+            <a href="/penfriends/dashboard/penpal">My PenFriend Dashboard</a>
+            {% endif %}
+            <a href="/penfriends/inbox">Inbox({{this_user.messages.unread.count}})</a>
+            <a href="/logout">Logout</a>
+        </nav>
         <div class="body">
             <h3>Inbox</h3>
             <table>
@@ -37,11 +37,11 @@
                         <td>{{message.sender}}</td>
                         <td>{{message.created}}</td>
                         {% if message.attachment == null %}<td>y</td>{% else %}<td>n</td>{% endif %}
-                        <td><a href="/message/{{message.id}}">View</a>|<a href="/message/{{message.id}}/mark_read">Mark read</a>|<a href="/message/{{message.id}}/delete">Delete</a></td>
+                        <td><a href="/message/{{message.id}}">View</a>|<a href="/penfriends/message/{{message.id}}/mark_read">Mark read</a>|<a href="/penfriends/message/{{message.id}}/delete">Delete</a></td>
                     </tr>
                 {% endfor %}
             </table>
-            <a class="button" href="/message/new">Compose new message</a>
+            <a class="button" href="/penfriends/message/new_message">Compose new message</a>
         </div>
 </body>
 </html>

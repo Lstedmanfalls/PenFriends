@@ -12,20 +12,20 @@
 </head>
 <body>
     <div class="container">
-    
-        <div class="sidebar">
-            <br>
+        <nav>
             <a href="/penfriends">Seeking PenFriends</a>
-            <br>  
-            <a href="/dashboard/{{this_user.id}}">Dashboard</a>
-            <br>
-            <a href="/inbox/{{this_user.id}}">Inbox({{this_user.messages.unread.count}})</a>
-            <br>
-        </div>
-        
+            {% if this_user.category == "admin" %}
+            <a href="/penfriends/dashboard/admin">My Admin Dashboard</a>
+            {% endif %}
+            {% if this_user.category == "penpal" %}
+            <a href="/penfriends/dashboard/penpal">My PenFriend Dashboard</a>
+            {% endif %}
+            <a href="/penfriends/inbox">Inbox({{this_user.messages.unread.count}})</a>
+            <a href="/logout">Logout</a>
+        </nav>
         <div class="body">
             Hi, {{this_user.category}} {{this_user.first_name}} {{this_user.last_name}}
-            <form  class="sub_body" action="/penfriends/dashboard/{{this_user.id}}/createresident" method="Post" enctype="multipart/form-data">
+            <form  class="sub_body" action="/penfriends/dashboard/admin/createresident" method="Post" enctype="multipart/form-data">
                 <h2>Add New Resident</h2>
                 {%csrf_token%}
                 
@@ -48,36 +48,28 @@
                 <button class="btn btn-primary">Add Resident</button>
                 {% if messages %}
                 <div class="alert alert-warning" role="alert">
-                    
                     <ul class="messages">    
                         {% for message in messages %}    
                             <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>    
                         {% endfor %}
                     </ul>
-                    
                 </div>
                 {% endif %}
-
             </form>
             <div class="sub_body">
                 <h3>My Residents</h3>
-                
                     {% for resident in this_user.residents.all %}
                     <ul><a href='/penfriends/resident/{{resident.id}}'>{{resident.first_name}} {{resident.last_name}}</a>
-                        <form action="/penfriends/resident/{{resident.id}}/{{this_user.id}}/delete" method="post">
+                        <form action="/penfriends/resident/{{resident.id}}/delete" method="post">
                             {% csrf_token %}
                             <button class="btn btn-danger btn-sm">Delete</button>
                         </form>
                     </ul>
-                    {% endfor%}
-               
-                
+                    {% endfor%}                
             </div>
-            
         </div>
         <div class="body">
-            
-            <form class="sub_body" action="/penfriends/dashboard/{{this_user.id}}/createpost" method="Post">
+            <form class="sub_body" action="/penfriends/dashboard/admin/createpost" method="Post">
                 <h2>Add New Post</h2>
                 {%csrf_token%}
                 <div class="form-group">
@@ -86,8 +78,7 @@
                 </div>
                 <div class="form-group">
                     <label for="for_resident">Choose a resident:</label>
-
-                    <select name="for_resident" >
+                    <select name="for_resident">
                         {% for resident in this_user.residents.all%}
                     <option value="{{resident.id}}">{{resident.first_name}} {{resident.last_name}}</option>
                         {% endfor %}
@@ -100,23 +91,19 @@
                 <button class="btn btn-primary">Add Post</button>
                 {% if messages %}
                 <div class="alert alert-warning" role="alert">
-                    
                     <ul class="messages">    
                         {% for message in messages %}    
                             <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>    
                         {% endfor %}
                     </ul>
-                    
                 </div>
                 {% endif %}
-                
             </form>
             <div class="sub_body">
                 <h3>My Posts</h3>
             {% for resident in this_user.residents.all %}
                 {% for post in resident.res_posts.all %}
-                
-                    <form action="/penfriends/resident/{{this_user.id}}/{{post.id}}/updatepost" method="Post">
+                    <form action="/penfriends/resident/{{post.id}}/updatepost" method="Post">
                         {%csrf_token%}
                         <div class="form-group">
                             <label for="title">Title</label>
@@ -129,14 +116,13 @@
                         </div>
                         <button class="btn btn-success btn-sm">Update</button>
                     </form>
-                    <form action="/penfriends/resident/{{this_user.id}}/{{post.id}}/deletepost" method="post">
+                    <form action="/penfriends/resident/{{post.id}}/deletepost" method="post">
                         {% csrf_token %}
                         <button class="btn btn-danger btn-sm">Delete</button>
                     </form>
                 {% endfor %}
             {% endfor %}
             </div>
-            
         </div>
     </div>    
 </body>

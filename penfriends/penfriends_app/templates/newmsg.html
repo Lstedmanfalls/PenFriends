@@ -12,21 +12,20 @@
 </head>
 <body>
     <div class="container">
-    
-        <div class="sidebar">
-            <br>
+        <nav>
             <a href="/penfriends">Seeking PenFriends</a>
-            <br>  
-            <a href="/penfriends/dashboard/{{this_user.id}}">Dashboard</a>
-            <br>
-            <a href="/inbox/{{this_user.id}}">Inbox({{this_user.messages.unread.count}})</a>
-            <br>
-        </div>
-        
+            {% if this_user.category == "admin" %}
+            <a href="/penfriends/dashboard/admin">My Admin Dashboard</a>
+            {% endif %}
+            {% if this_user.category == "penpal" %}
+            <a href="/penfriends/dashboard/penpal">My PenFriend Dashboard</a>
+            {% endif %}
+            <a href="/penfriends/inbox">Inbox({{this_user.messages.unread.count}})</a>
+            <a href="/logout">Logout</a>
+        </nav>
         <div class="body">
             <h2>Create New Message</h2>
-            <form  class="sub_body" action="/penfriends/message/new_message/create" method="Post" enctype="multipart/form-data">
-                
+            <form  class="sub_body" action="/penfriends/message/create_message" method="Post" enctype="multipart/form-data">
                 {%csrf_token%}
                 <div class="form-group">
                     <label for="subject">Subject</label>
@@ -34,9 +33,8 @@
                 </div>
                 <div class="form-group">
                     <label for="recipient">Recipient (resident)</label>
-
                     <select name="recipient" >
-                        {% for resident in this_user.penpal_residents.all%}
+                        {% for resident in this_user.penpal_residents.all %}
                     <option value="{{resident.id}}">{{resident.first_name}} {{resident.last_name}}</option>
                         {% endfor %}
                     </select>
@@ -49,23 +47,17 @@
                     <label for="attachment">Attachment</label>
                     <input type="file" name="attachment">
                 </div>
-                
                 <button class="btn btn-primary btn-sm">Send</button>
-                
                 {% if messages %}
-                <div class="alert alert-warning" role="alert">
-                    
+                <div class="alert alert-warning" role="alert">   
                     <ul class="messages">    
                         {% for message in messages %}    
                             <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>    
                         {% endfor %}
                     </ul>
-                    
                 </div>
                 {% endif %}
-
             </form>
-        
         </div>
     </div>    
 </body>

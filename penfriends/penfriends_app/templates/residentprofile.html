@@ -12,22 +12,21 @@
 </head>
 <body>
     <div class="container">
-    
-        <div class="sidebar">
-            <br>
+        <nav>
             <a href="/penfriends">Seeking PenFriends</a>
-            <br>  
-            <a href="/penfriends/dashboard/{{this_user.id}}">Dashboard</a>
-            <br>
-            <a href="/inbox/{{this_user.id}}">Inbox({{this_user.messages.unread.count}})</a>
-            <br>
-        </div>
-        
+            {% if this_user.category == "admin" %}
+            <a href="/penfriends/dashboard/admin">My Admin Dashboard</a>
+            {% endif %}
+            {% if this_user.category == "penpal" %}
+            <a href="/penfriends/dashboard/penpal">My PenFriend Dashboard</a>
+            {% endif %}
+            <a href="/penfriends/inbox">Inbox({{this_user.messages.unread.count}})</a>
+            <a href="/logout">Logout</a>
+        </nav>
         <div class="body">
             <h2>{{this_resident.first_name}} {{this_resident.last_name}}</h2>
         {% if this_user.id == this_resident.creator.id %}
             <form  class="sub_body" action="/penfriends/resident/{{this_resident.id}}/updateresident" method="Post" enctype="multipart/form-data">
-                
                 {%csrf_token%}
                 <img id="profilepicture" src="{{ this_resident.picture.url }}" alt="profile pic">
                 <div class="form-group">
@@ -46,24 +45,21 @@
                     <label for="bio">Bio</label>
                     <textarea name="bio">{{this_resident.bio}}</textarea>
                 </div>
-                
                 <button class="btn btn-success btn-sm">Update</button>
-                <form action="/penfriends/resident/{{this_resident.id}}/{{this_user.id}}/delete" method="post">
+                </form>
+                <form action="/penfriends/resident/{{this_resident.id}}/delete" method="post">
                     {% csrf_token %}
                     <button class="btn btn-danger btn-sm">Delete</button>
                 </form>
                 {% if messages %}
                 <div class="alert alert-warning" role="alert">
-                    
                     <ul class="messages">    
                         {% for message in messages %}    
                             <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>    
                         {% endfor %}
                     </ul>
-                    
                 </div>
                 {% endif %}
-
             </form>
         {% endif %}
         {% if this_user.id != this_resident.creator.id %}

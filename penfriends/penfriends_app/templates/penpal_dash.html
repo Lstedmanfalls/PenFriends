@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{this_user.first_name}}'s Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <div id="wrapper">
+        <nav>
+            <a href="/penfriends">Seeking PenFriends</a>
+            {% if this_user.category == "admin" %}
+            <a href="/penfriends/dashboard/admin">My Admin Dashboard</a>
+            {% endif %}
+            {% if this_user.category == "penpal" %}
+            <a href="/penfriends/dashboard/penpal">My PenFriend Dashboard</a>
+            {% endif %}
+            <a href="/penfriends/inbox">Inbox({{this_user.messages.unread.count}})</a>
+            <a href="/logout">Logout</a>
+        </nav>
+        <h1>{{this_user.first_name}}'s Dashboard</h1>
+        {% if messages %}
+        <div class="alert alert-warning" role="alert">
+            <ul class="messages">    
+                {% for message in messages %}    
+                    <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>    
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+        <div id="residents">
+            <h2>My PenFriends</h2>
+            {% for resident in all_the_residents %}
+            <a href ="/penfriends/resident/{{resident.id}}">{{resident.first_name}} {{resident.last_name}}</a>
+            {% endfor %}
+            <div id="change_password">
+                <form action="/penfriends/dashboard/penpal/update_password" method="POST">
+                    {% csrf_token %}
+                        <label for="password">Password</label>
+                        <input name="password" type="password">
+                        <label for="password_confirm">Confirm Password</label>
+                        <input name="password_confirm" type="password">
+                        <button type="submit">Update Password</button>
+                    </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
