@@ -10,16 +10,17 @@
 </head>
 <body>
     <div class="container">
-    
-        <div class="sidebar">
-            <br>
+        <nav>
             <a href="/penfriends">Seeking PenFriends</a>
-            <br>  
-            <a href="/dashboard/{{this_user.id}}">Dashboard</a>
-            <br>
-            <a href="/inbox/{{this_user.id}}">Inbox({{this_user.messages.unread.count}})</a>
-            <br>
-        </div>
+            {% if this_user.category == "admin" %}
+            <a href="/penfriends/dashboard/admin">My Admin Dashboard</a>
+            {% endif %}
+            {% if this_user.category == "penpal" %}
+            <a href="/penfriends/dashboard/penpal">My PenFriend Dashboard</a>
+            {% endif %}
+            <a href="/penfriends/inbox">Inbox({{this_user.messages.unread.count}})</a>
+            <a href="/logout">Logout</a>
+        </nav>
         <div class="messagebuttons">
             <br>
             <a href="/message/compose" class="button">Reply</a>

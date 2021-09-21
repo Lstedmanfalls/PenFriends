@@ -11,21 +11,46 @@
 </head>
 <body>
     <div id="wrapper">
+        <nav>
+            <a href="/penfriends">Seeking PenFriends</a>
+            {% if this_user.category == "admin" %}
+            <a href="/penfriends/dashboard/admin">My Admin Dashboard</a>
+            {% endif %}
+            {% if this_user.category == "penpal" %}
+            <a href="/penfriends/dashboard/penpal">My PenFriend Dashboard</a>
+            {% endif %}
+            <a href="/penfriends/inbox">Inbox({{this_user.messages.unread.count}})</a>
+            <a href="/logout">Logout</a>
+        </nav>
         <div id ="container">
             <h1>Seeking PenFriends</h1>
             <div id="post_block">
+                {% for post in all_the_posts %}
                 <div id="post">
-                    <!-- for post in all the posts -->
-                    <!-- post.resident.image -->
-                    <!-- post.title -->
-                    <!-- post.body -->
-                    <form action="create canned message" method="POST">
+                    <h2>{{post.title}}</h2>
+                    <p>{{post.body}}</p>
+                    <p>Check out <a href="/penfriends/resident/{{post.for_resident.id}}">{{post.for_resident.first_name}} {{post.for_resident.last_name}}'s</a> profile for more info</p>
+                    <img src={{post.for_resident.picture.url}} alt="{{post.for_resident.first_name}} {{post.for_resident.last_name}}">
+                    {% if this_user.category == "penpal" %}
+                    {% if post.for_resident not in this_user.penpal_residents.all %}
+                    <form action="/penfriends/become_penfriend" method="POST">
                     {% csrf_token %}
-                        <input name="resident_id" type="hidden" value="post.resident.id">
-                        <input name="maker_id" type="hidden" value = "post.maker.id">
-                        <button type="submit">Become {resident.name}'s PenFriend</button>
+                        <input name="resident_id" type="hidden" value={{post.for_resident.id}}>
+                        <button type="submit">I want to be {{post.for_resident.first_name}}'s PenFriend</button>
                     </form>
+                    {% endif %}
+                    {% endif %}
+                    {% if messages %}
+                    <div class="alert alert-warning" role="alert">   
+                        <ul class="messages">    
+                            {% for message in messages %}    
+                                <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>    
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
                 </div>
+                {% endfor %}
             </div>
         </div>
     </div>
