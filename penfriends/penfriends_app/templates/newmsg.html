@@ -32,12 +32,31 @@
                     <input type="text" name="subject">
                 </div>
                 <div class="form-group">
-                    <label for="recipient">Recipient (resident)</label>
+                    <label for="recipient">Recipient</label>
                     <select name="recipient" >
-                        {% for resident in this_user.penpal_residents.all %}
-                    <option value="{{resident.id}}">{{resident.first_name}} {{resident.last_name}}</option>
+                        {% for penpal in all_recipients %}
+                    <option value="{{penpal.id}}">{{penpal.first_name}} {{penpal.last_name}}</option>
                         {% endfor %}
                     </select>
+                </div>
+                <div class="form-group">
+                    <label for="recipient">Resident to write</label>
+                    
+                    <select name="pen_resident" >
+                        {% if this_user.category == "penpal" %}
+                            {% for resident in this_user.penpal_residents.all %}
+                        <option value="{{resident.id}}">{{resident.first_name}} {{resident.last_name}}</option>
+                            
+                        {% endfor %}
+                        {% endif%}
+                        {% if this_user.category == "admin" %}
+                            {% for resident in this_user.residents.all %}
+                        <option value="{{resident.id}}">{{resident.first_name}} {{resident.last_name}}</option>
+                            
+                        {% endfor %}
+                        {% endif%}
+                    </select>
+                    
                 </div>
                 <div class="form-group">
                     <label for="content">Content</label>

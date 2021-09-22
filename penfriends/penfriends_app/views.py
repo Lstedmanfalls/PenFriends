@@ -186,8 +186,14 @@ def new_message(request):
         messages.error(request, "You must be logged in to view this site")
         return redirect ("/")
     else:
+        this_user=User.objects.get(id = request.session['user_id'])
+        if this_user.category=="admin":
+            all_recipients=User.objects.filter(category="penpal")
+        else:
+            all_recipients=User.objects.filter(category="admin")
         context = {
-            "this_user": User.objects.get(id = request.session['user_id'])
+            "this_user": User.objects.get(id = request.session['user_id']),
+            "all_recipients":all_recipients
         }
         return render(request, "newmsg.html", context)
 
@@ -197,14 +203,15 @@ def create_message(request):
         return redirect ("/")
     else:
         user = User.objects.get(id = request.session['user_id'])
-        this_resident = Resident.objects.get(id=request.POST['recipient'])
+        
         if request.method == "POST" and user.category == "penpal":
             Message.objects.create(
                 subject = request.POST['subject'],
                 content = request.POST['content'],
                 attachment = request.FILES['attachment'],
                 creator = user,
-                recipient = this_resident
+                recipient = request.POST['recipient'],
+                pen_resident=request.POST['pen_resident']
             )
         return redirect('/penfriends/message/new_message')
 
