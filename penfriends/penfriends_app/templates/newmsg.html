@@ -25,38 +25,34 @@
         </nav>
         <div class="body">
             <h2>Create New Message</h2>
-            <form  class="sub_body" action="/penfriends/message/create_message" method="Post" enctype="multipart/form-data">
-                {%csrf_token%}
+            <form class="sub_body" action="/penfriends/message/create_message" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
                 <div class="form-group">
                     <label for="subject">Subject</label>
                     <input type="text" name="subject">
                 </div>
                 <div class="form-group">
-                    <label for="recipient">Recipient</label>
-                    <select name="recipient" >
-                        {% for penpal in all_recipients %}
-                    <option value="{{penpal.id}}">{{penpal.first_name}} {{penpal.last_name}}</option>
+                    <label for="recipient_id">Recipient</label>
+                    <select name="recipient_id">
+                        {% for recipient in all_recipients %}
+                        <option value="{{recipient.id}}">{{recipient.first_name}} {{recipient.last_name}}</option>
                         {% endfor %}
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="recipient">Resident to write</label>
-                    
-                    <select name="pen_resident" >
+                    <label for="resident_id">Resident</label>
+                    <select name="resident_id" >
                         {% if this_user.category == "penpal" %}
                             {% for resident in this_user.penpal_residents.all %}
-                        <option value="{{resident.id}}">{{resident.first_name}} {{resident.last_name}}</option>
-                            
+                        <option value="{{resident.id}}">{{resident.first_name}} {{resident.last_name}}</option>  
                         {% endfor %}
                         {% endif%}
                         {% if this_user.category == "admin" %}
                             {% for resident in this_user.residents.all %}
                         <option value="{{resident.id}}">{{resident.first_name}} {{resident.last_name}}</option>
-                            
                         {% endfor %}
                         {% endif%}
                     </select>
-                    
                 </div>
                 <div class="form-group">
                     <label for="content">Content</label>

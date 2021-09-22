@@ -188,12 +188,12 @@ def new_message(request):
     else:
         this_user=User.objects.get(id = request.session['user_id'])
         if this_user.category=="admin":
-            all_recipients=User.objects.filter(category="penpal")
+            all_recipients = User.objects.filter(category="penpal")
         else:
-            all_recipients=User.objects.filter(category="admin")
+            all_recipients = User.objects.filter(category="admin")
         context = {
-            "this_user": User.objects.get(id = request.session['user_id']),
-            "all_recipients":all_recipients
+            "this_user": this_user,
+            "all_recipients": all_recipients
         }
         return render(request, "newmsg.html", context)
 
@@ -202,18 +202,20 @@ def create_message(request):
         messages.error(request, "You must be logged in to view this site")
         return redirect ("/")
     else:
-        user = User.objects.get(id = request.session['user_id'])
-        
-        if request.method == "POST" and user.category == "penpal":
-            Message.objects.create(
+        this_user = User.objects.get(id = request.session['user_id'])
+        recipient = User.objects.get(id = request.POST["recipient_id"])
+        pen_resident = Resident.objects.get(id = request.POST["resident_id"])
+        if request.method == "POST":
+            create = Message.objects.create(
                 subject = request.POST['subject'],
                 content = request.POST['content'],
                 attachment = request.FILES['attachment'],
-                creator = user,
-                recipient = request.POST['recipient'],
-                pen_resident=request.POST['pen_resident']
+                creator = this_user,
+                recipient = recipient,
+                pen_resident = pen_resident,
             )
-        return redirect('/penfriends/message/new_message')
+            message_id = create.id
+            return redirect(f'/penfriends/message/{message_id}')
 
 # View Message Page
 def message(request, message_id):
