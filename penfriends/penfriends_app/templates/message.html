@@ -31,15 +31,13 @@
         </div>
         <div class="body">
             <h3>Message</h3>
-            <br>
-            <br>
-            <p>From: {{this_message.author}}</p>
-            <p>Date: {{this_message.created}}</p>
+            <p>From: {{this_message.creator.first_name}} {{this_message.creator.last_name}}</p>
+            <p>Date: {{this_message.created_at}}</p>
             <p>Subject: {{this_message.subject}}</p>
-            <br>
-            <p>{{this_message.body}}</p>
-            <br>
-            <a href="/message/{{message.id}}" class="button">Download attachment</a>
+            <p>Recipient: {{this_message.recipient.first_name}} {{this_message.recipient.last_name}}</p>
+            <p>Resident: {{this_message.pen_resident.first_name}} {{this_message.pen_resident.last_name}}</p>
+            <p>{{this_message.content}}</p>
+            <img src="{{this_message.attachment.url}}">
         </div>
 </body>
 </html>
