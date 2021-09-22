@@ -10,13 +10,13 @@ from login_registration_app.models import User
         #all fields except penfriends
     #)
 #a list of penpal_residents when User.category="Penpal"
-#a list of messages when User.category="Penpal"
+#a list of recipient_messages for all Users, and a list of messages for all users.
 #a list of posts when User.category="Admin"
 
 class Resident(models.Model):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
-    picture = models.ImageField()
+    picture = models.ImageField(blank=True)
     bio = models.TextField()
     creator = models.ForeignKey(User, related_name="residents", on_delete = models.CASCADE)
     penfriends = models.ManyToManyField(User, related_name="penpal_residents")
@@ -29,10 +29,11 @@ class Resident(models.Model):
 class Message(models.Model):
     subject = models.CharField(max_length=255)
     content = models.TextField()
-    attachment = models.FileField(upload_to='media')
+    attachment = models.FileField(upload_to='media',blank=True)
     unread = models.BooleanField(default=True)
     creator = models.ForeignKey(User, related_name="messages", on_delete = models.CASCADE)
     recipient = models.ForeignKey(User, related_name="recipient_messages", on_delete=models.CASCADE)
+    pen_resident=models.ForeignKey(Resident, related_name="res_messages", on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
