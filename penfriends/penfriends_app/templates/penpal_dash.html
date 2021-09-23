@@ -7,25 +7,29 @@
     <title>{{this_user.first_name}}'s Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
     {% load static %}
-    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="{% static 'normalize.css' %}">
+    <link rel="stylesheet" href="{% static 'skeleton.css' %}">
 </head>
 <body>
     <div class="container">
-        <div class="one column"></div>
+        <div class="row"><div class="twelve columns"><br></div></div>
+        <div class="row">
+        <div class="one column"><br></div>
         <div class="two columns">
-        <nav>
-            <a href="/penfriends">Seeking PenFriends</a>
+            <a href="/penfriends" class="button">Seeking PenFriends</a>
             {% if this_user.category == "admin" %}
-            <a href="/penfriends/dashboard/admin">My Admin Dashboard</a>
+            <a href="/penfriends/dashboard/admin" class="button">My Admin Dashboard</a>
             {% endif %}
             {% if this_user.category == "penpal" %}
-            <a href="/penfriends/dashboard/penpal">My PenFriend Dashboard</a>
+            <a href="/penfriends/dashboard/penpal" class="button">My PenFriend Dashboard</a>
             {% endif %}
-            <a href="/penfriends/inbox">Inbox ({{unread_message_count}})</a>
-            <a href="/logout">Logout</a>
-        </nav>
-        <div class="one column"></div>
+            <a href="/penfriends/inbox" class="button">Inbox ({{unread_message_count}})</a>
+            <a href="/logout" class="button">Logout</a>
+        </div>
+        <div class="two columns"><br></div>
+        <div class="six columns">
         <h1>{{this_user.first_name}}'s Dashboard</h1>
+        <br>
         {% if messages %}
         <div class="alert alert-warning" role="alert">
             <ul class="messages">    
@@ -36,18 +40,20 @@
         </div>
         {% endif %}
         <div id="residents">
-            <h2>My PenFriends</h2>
+            <h4>My PenFriends</h4>
             {% for resident in all_the_residents %}
-            <a href ="/penfriends/resident/{{resident.id}}">{{resident.first_name}} {{resident.last_name}}</a>
+            <a href ="/penfriends/resident/{{resident.id}}" class="button">{{resident.first_name}} {{resident.last_name}}</a>
             <form action="/penfriends/dashboard/penpal/remove_penpal" method="POST">
             {% csrf_token %}
                 <input name="resident_id" type="hidden" value="{{resident.id}}">
                 <button type="submit">Remove PenPal</button>
             </form>
+            <br>
             {% endfor %}
         </div>
+        <br>
         <div id="change_password">
-            <h2>Change Password</h2>
+            <h4>Change Password</h4>
             <form action="/penfriends/dashboard/penpal/update_password" method="POST">
                 {% csrf_token %}
                 <label for="password">Password</label>
@@ -56,6 +62,9 @@
                 <input name="password_confirm" type="password">
                 <button type="submit">Update Password</button>
             </form>
+        </div>
+        </div>
+        <div class="one column"><br></div>
         </div>
     </div>
 </body>

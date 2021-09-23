@@ -11,22 +11,22 @@
 </head>
 <body>
     <div class="container">
-        <div class="one column"></div>
+        <div class="row"><div class="twelve columns"><br></div></div>
+        <div class="row">
+        <div class="one column"><br></div>
         <div class="two columns">
-        <nav>
-            <a href="/penfriends">Seeking PenFriends</a>
+            <a href="/penfriends" class="button">Seeking PenFriends</a><br>
             {% if this_user.category == "admin" %}
-            <a href="/penfriends/dashboard/admin">My Admin Dashboard</a>
+            <a href="/penfriends/dashboard/admin" class="button">My Admin Dashboard</a><br>
             {% endif %}
             {% if this_user.category == "penpal" %}
-            <a href="/penfriends/dashboard/penpal">My PenFriend Dashboard</a>
+            <a href="/penfriends/dashboard/penpal" class="button">My PenFriend Dashboard</a><br>
             {% endif %}
-            <a href="/penfriends/inbox">Inbox ({{unread_message_count}})</a>
-            <a href="/logout">Logout</a>
-        </nav>
-        <div class="one column"></div>
-        <div class="six columns">
-        <div class="body">
+            <a href="/penfriends/inbox" class="button">Inbox ({{unread_message_count}})</a><br>
+            <a href="/logout" class="button">Logout</a>
+        </div>
+        <div class="two columns"><br></div>
+        <div class="five columns">
             <h3>Inbox</h3>
             {% if user_messages %}
             <table>
@@ -79,7 +79,8 @@
             {% endif %}
             <a class="button" href="/penfriends/message/new_message">Compose new message</a>
         </div>
-        </div>
-        <div class="two columns"></div>
+        <div class="one column"><br></div>
+        </div>  
+    </div>
 </body>
 </html>
