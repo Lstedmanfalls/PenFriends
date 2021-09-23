@@ -49,15 +49,7 @@
                     <input type="file" name="picture" accept="image/*">
                 </div>
                 <button class="btn btn-primary">Add Resident</button>
-                {% if messages %}
-                <div class="alert alert-warning" role="alert">
-                    <ul class="messages">    
-                        {% for message in messages %}    
-                            <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>    
-                        {% endfor %}
-                    </ul>
-                </div>
-                {% endif %}
+               
             </form>
             <div class="sub_body">
                 <h3>My Residents</h3>
@@ -92,15 +84,7 @@
                     <textarea name="body"></textarea>
                 </div>
                 <button class="btn btn-primary">Add Post</button>
-                {% if messages %}
-                <div class="alert alert-warning" role="alert">
-                    <ul class="messages">    
-                        {% for message in messages %}    
-                            <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>    
-                        {% endfor %}
-                    </ul>
-                </div>
-                {% endif %}
+                
             </form>
             <div class="sub_body">
                 <h3>My Posts</h3>
@@ -125,6 +109,15 @@
                     </form>
                 {% endfor %}
             {% endfor %}
+            {% if messages %}
+                <div class="alert alert-warning" role="alert">
+                    <ul class="messages">    
+                        {% for message in messages %}    
+                            <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>    
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
             </div>
         </div>
     </div>    
