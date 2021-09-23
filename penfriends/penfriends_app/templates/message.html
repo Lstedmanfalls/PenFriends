@@ -38,6 +38,7 @@
             <p>Resident: {{this_message.pen_resident.first_name}} {{this_message.pen_resident.last_name}}</p>
             <p>{{this_message.content}}</p>
             <img src="{{this_message.attachment.url}}">
+            <button><a href="{{this_message.attachment.url}}" download>Download</a></button>
         </div>
 </body>
 </html>
