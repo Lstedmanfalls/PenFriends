@@ -10,7 +10,9 @@
     <link rel="stylesheet" href="{% static 'style.css' %}">
 </head>
 <body>
-    <div id="wrapper">
+    <div class="container">
+        <div class="one column"></div>
+        <div class="two columns">
         <nav>
             <a href="/penfriends">Seeking PenFriends</a>
             {% if this_user.category == "admin" %}
@@ -19,10 +21,10 @@
             {% if this_user.category == "penpal" %}
             <a href="/penfriends/dashboard/penpal">My PenFriend Dashboard</a>
             {% endif %}
-            <a href="/penfriends/inbox">Inbox({{this_user.messages.unread.count}})</a>
+            <a href="/penfriends/inbox">Inbox ({{unread_message_count}})</a>
             <a href="/logout">Logout</a>
         </nav>
-        <div id ="container">
+        <div class="one column"></div>
             <h1>Seeking PenFriends</h1>
             <div id="post_block">
                 {% for post in all_the_posts %}
