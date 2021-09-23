@@ -16,6 +16,7 @@ urlpatterns = [
     # Penpal Dashboard Page
     path('/dashboard/penpal', views.penpal_dash),
     path('/dashboard/penpal/update_password', views.update_penpal_password),
+    path('/dashboard/penpal/remove_penpal', views.remove_penpal),
 
     # Resident Profile Page
     path('/resident/<int:resident_id>', views.residentprofile),
@@ -25,6 +26,7 @@ urlpatterns = [
     # Inbox Page
     path('/inbox', views.inbox),
     path('/message/mark_read', views.mark_read),
+    path('/message/mark_unread', views.mark_unread),
     path('/message/delete', views.delete_message),
 
     # Create Message Page
