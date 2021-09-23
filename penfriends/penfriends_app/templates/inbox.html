@@ -39,7 +39,7 @@
                         {% for message in user_messages %}
                         <tr>
                             <td>{{message.subject}}</td>
-                            <td>{{message.creator}}</td>
+                            <td>{{message.creator.first_name}} {{message.creator.last_name}}</td>
                             <td>{{message.created_at}}</td>
                             {% if message.attachment == null %}<td>y</td>{% else %}<td>n</td>{% endif %}
                             <td><form action="/penfriends/message/{{message.id}}" method="POST">{% csrf_token %}<input type="submit" value="View"></form>|<form action="/message/mark_read" method="POST">{% csrf_token %}<input type="hidden" id="message_id" name="message_id" value="{message.id}"><input type="submit" value="Mark read"></form>|<form action="/message/delete" method="POST">{% csrf_token %}<input type="hidden" id="message_id" name="message_id" value="{message.id}"><input type="submit" value="Delete"></form></td>
