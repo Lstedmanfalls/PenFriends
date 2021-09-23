@@ -31,7 +31,6 @@
                     <td>Attachment:</td>
                     <td>Actions:</td>
                 </thead>
-                {% for message in user_messages %}
                     <tr>
                         <td>{{message.subject}}</td>
                         <td>{{message.sender}}</td>
@@ -39,7 +38,6 @@
                         {% if message.attachment == null %}<td>y</td>{% else %}<td>n</td>{% endif %}
                         <td><a href="/message/{{message.id}}">View</a>|<a href="/penfriends/message/{{message.id}}/mark_read">Mark read</a>|<a href="/penfriends/message/{{message.id}}/delete">Delete</a></td>
                     </tr>
-                {% endfor %}
             </table>
             <a class="button" href="/penfriends/message/new_message">Compose new message</a>
         </div>

@@ -188,12 +188,12 @@ def new_message(request):
     else:
         this_user=User.objects.get(id = request.session['user_id'])
         if this_user.category=="admin":
-            all_recipients=User.objects.filter(category="penpal")
+            all_recipients = User.objects.filter(category="penpal")
         else:
-            all_recipients=User.objects.filter(category="admin")
+            all_recipients = User.objects.filter(category="admin")
         context = {
-            "this_user": User.objects.get(id = request.session['user_id']),
-            "all_recipients":all_recipients
+            "this_user": this_user,
+            "all_recipients": all_recipients
         }
         return render(request, "newmsg.html", context)
 
