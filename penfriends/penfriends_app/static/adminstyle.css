@@ -7,15 +7,13 @@
     justify-content: space-evenly;
     padding: 20px;
 }
+
 .body{
     margin:20px;
-}
-.sub_body{
-    padding: 10px;
     border: 2px solid rgb(206, 222, 241);
-    margin: 15px;
-    
+    padding: 10px;
 }
+
 ul{
     display:flex;
     justify-content: space-around;
