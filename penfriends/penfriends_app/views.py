@@ -13,10 +13,14 @@ def penfriends(request): #GET REQUEST
         return redirect ("/")
     else:
         this_user = User.objects.get(id=request.session["user_id"])
+        if this_user.recipient_messages:
+            unread_messages = this_user.recipient_messages.filter(unread = True)
+            unread_message_count = unread_messages.count()
         all_the_posts = Post.objects.all()
         context = {
         "this_user": this_user,
         "all_the_posts": all_the_posts,
+        "unread_message_count": unread_message_count
     }
     return render(request, "penfriends.html", context)
 
@@ -27,6 +31,7 @@ def become_penfriend(request): #POST REQUEST
         this_user = User.objects.get(id = request.session["user_id"])
         this_resident = Resident.objects.get(id = request.POST["resident_id"])
         this_user.penpal_residents.add(this_resident)
+        Message.objects.create(subject = "New PenFriend Added", content = this_user.first_name + " " + this_user.last_name + " has added "+ this_resident.first_name + " " + this_resident.last_name + " as a Penfriend", creator = this_user, recipient = this_resident.creator, pen_resident = this_resident)
         messages.success(request, "You added a PenFriend")
     return redirect("/penfriends/dashboard/penpal")
 
@@ -36,8 +41,13 @@ def admindash(request):
         messages.error(request, "You must be logged in to view this site")
         return redirect ("/")
     else:
+        this_user = User.objects.get(id = request.session["user_id"])
+        if this_user.recipient_messages:
+            unread_messages = this_user.recipient_messages.filter(unread = True)
+            unread_message_count = unread_messages.count()
         context = {
-            "this_user": User.objects.get(id = request.session["user_id"])
+            "this_user": this_user,
+            "unread_message_count": unread_message_count
         }
         return render(request,'admindash.html', context)
 
@@ -102,6 +112,9 @@ def penpal_dash(request): #GET REQUEST
         return redirect ("/")
     else:
         this_user = User.objects.get(id = request.session["user_id"])
+        if this_user.recipient_messages:
+            unread_messages = this_user.recipient_messages.filter(unread = True)
+            unread_message_count = unread_messages.count()
         if this_user.category != "penpal":
             messages.error(request, "You are not authorized to view this page")
             return redirect ("/")
@@ -109,7 +122,8 @@ def penpal_dash(request): #GET REQUEST
             all_the_residents = this_user.penpal_residents.all()
             context = {
                 "this_user": this_user,
-                "all_the_residents": all_the_residents
+                "all_the_residents": all_the_residents,
+                "unread_message_count": unread_message_count
             }
             return render(request, "penpal_dash.html", context)
 
@@ -125,15 +139,31 @@ def update_penpal_password(request): #POST REQUEST
         messages.success(request, "Password updated")
     return redirect("/penfriends/dashboard/penpal")
 
+def remove_penpal(request): #POST Request
+    if request.method != "POST":
+        return redirect("/")
+    this_resident = Resident.objects.get(id = request.POST["resident_id"])
+    this_user = User.objects.get(id = request.session["user_id"])
+    if request.method == "POST":
+        this_user.penpal_residents.remove(this_resident)        
+        messages.success(request, "PenFriend removed")
+    return redirect("/penfriends/dashboard/penpal")
+
 # Resident Profile Page
 def residentprofile(request, resident_id):
     if "user_id" not in request.session:
         messages.error(request, "You must be logged in to view this site")
         return redirect ("/")
     else:
+        this_user = User.objects.get(id = request.session["user_id"])
+        this_resident = Resident.objects.get(id = resident_id)
+        if this_user.recipient_messages:
+            unread_messages = this_user.recipient_messages.filter(unread = True)
+            unread_message_count = unread_messages.count()
         context = {
-            "this_resident": Resident.objects.get(id=resident_id),
-            "this_user": User.objects.get(id=request.session['user_id'])
+            "this_resident": this_resident,
+            "this_user": this_user,
+            "unread_message_count": unread_message_count,
         }
         return render(request, "residentprofile.html", context)
 
@@ -168,15 +198,26 @@ def inbox(request):
         messages.error(request, "You must be logged in to view this site")
         return redirect ("/")
     else:
+        this_user = User.objects.get(id = request.session["user_id"])
+        if this_user.recipient_messages:
+            unread_messages = this_user.recipient_messages.filter(unread = True)
+            unread_message_count = unread_messages.count()
         context = {
-            "this_user": User.objects.get(id = request.session["user_id"]),
-            "user_messages": Message.objects.filter(recipient = request.session["user_id"]),
+            "this_user": this_user,
+            "user_messages": Message.objects.filter(recipient = this_user).order_by("-created_at"),
+            "unread_message_count": unread_message_count
         }
         return render (request, "inbox.html", context)
 
 def mark_read(request):
     this_message = Message.objects.get(id = request.POST["message_id"])
     this_message.unread = False
+    this_message.save()
+    return redirect("/penfriends/inbox")
+
+def mark_unread(request):
+    this_message = Message.objects.get(id = request.POST["message_id"])
+    this_message.unread = True
     this_message.save()
     return redirect("/penfriends/inbox")
 
@@ -192,13 +233,17 @@ def new_message(request):
         return redirect ("/")
     else:
         this_user=User.objects.get(id = request.session['user_id'])
+        if this_user.recipient_messages:
+            unread_messages = this_user.recipient_messages.filter(unread = True)
+            unread_message_count = unread_messages.count()
         if this_user.category=="admin":
             all_recipients = User.objects.filter(category="penpal")
         else:
             all_recipients = User.objects.filter(category="admin")
         context = {
             "this_user": this_user,
-            "all_recipients": all_recipients
+            "all_recipients": all_recipients,
+            "unread_message_count": unread_message_count
         }
         return render(request, "newmsg.html", context)
 
@@ -228,8 +273,14 @@ def message(request, message_id):
         messages.error(request, "You must be logged in to view this site")
         return redirect ("/")
     else:
+        this_user = User.objects.get(id = request.session["user_id"])
+        this_message = Message.objects.get(id = message_id)
+        if this_user.recipient_messages:
+            unread_messages = this_user.recipient_messages.filter(unread = True)
+            unread_message_count = unread_messages.count()
         context = { 
-            "this_user": User.objects.get(id = request.session["user_id"]),
-            "this_message": Message.objects.get(id = message_id)
+            "this_user": this_user,
+            "message": this_message,
+            "unread_message_count": unread_message_count,
         }
         return render (request, "message.html", context)
