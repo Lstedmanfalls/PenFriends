@@ -280,7 +280,7 @@ def message(request, message_id):
             unread_message_count = unread_messages.count()
         context = { 
             "this_user": this_user,
-            "this_message": this_message,
+            "message": this_message,
             "unread_message_count": unread_message_count,
         }
         return render (request, "message.html", context)
