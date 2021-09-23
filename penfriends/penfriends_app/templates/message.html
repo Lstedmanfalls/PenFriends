@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     {% load static %}
-    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
+    <link rel="stylesheet" href="{% static 'css/skeleton.css' %}">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,11 +24,11 @@
         </nav>
         <div class="messagebuttons">
             <br>
-            <a href="/message/compose" class="button">Reply</a>
+            <form action="/message/compose" method="POST">{% csrf_token %}<input type="submit" value="Reply"></form>
             <br>
-            <a href="/message/{{message.id}}/mark_read" class="button">Mark read</a>
+            <form action="/message/mark_read" method="POST">{% csrf_token %}<input type="hidden" id="message_id" name="message_id" value="{this_message.id}"><input type="submit" value="Mark read"></form>
             <br>
-            <a href="/message/{{message.id}}/delete" class="button">Delete</a>
+            <form action="/message/delete" method="POST">{% csrf_token %}<input type="hidden" id="message_id" name="message_id" value="{this_message.id}"><input type="submit" value="Delete"></form>
         </div>
         <div class="body">
             <h3>Message</h3>
