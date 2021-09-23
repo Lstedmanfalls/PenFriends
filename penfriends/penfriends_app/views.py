@@ -174,10 +174,15 @@ def inbox(request):
         }
         return render (request, "inbox.html", context)
 
-def mark_read(request, message_id):
-    this_message = Message.objects.get(id = message_id)
+def mark_read(request):
+    this_message = Message.objects.get(id = request.POST["message_id"])
     this_message.unread = False
     this_message.save()
+    return redirect("/penfriends/inbox")
+
+def delete_message(request): 
+    this_message = Message.objects.get(id = request.POST["message_id"])
+    this_message.delete()
     return redirect("/penfriends/inbox")
 
 # Create Message Page

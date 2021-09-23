@@ -24,7 +24,8 @@ urlpatterns = [
 
     # Inbox Page
     path('/inbox', views.inbox),
-    path('/message/<int:message_id>/mark_read', views.mark_read),
+    path('/message/mark_read', views.mark_read),
+    path('/message/delete', views.delete_message),
 
     # Create Message Page
     path('/message/new_message', views.new_message),
