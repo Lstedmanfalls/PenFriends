@@ -11,6 +11,8 @@
 </head>
 <body>
     <div class="container">
+        <div class="one column"></div>
+        <div class="two columns">
         <nav>
             <a href="/penfriends">Seeking PenFriends</a>
             {% if this_user.category == "admin" %}
@@ -19,28 +21,53 @@
             {% if this_user.category == "penpal" %}
             <a href="/penfriends/dashboard/penpal">My PenFriend Dashboard</a>
             {% endif %}
-            <a href="/penfriends/inbox">Inbox({{this_user.messages.unread.count}})</a>
+            <a href="/penfriends/inbox">Inbox ({{unread_message_count}})</a>
             <a href="/logout">Logout</a>
         </nav>
+        <div class="one column"></div>
         <div class="messagebuttons">
             <br>
-            <form action="/message/compose" method="POST">{% csrf_token %}<input type="submit" value="Reply"></form>
+            <form action="/penfriends/message/new_message" method="POST">
+                {% csrf_token %}
+                <button type="submit">Reply</button>
+            </form>
             <br>
-            <form action="/message/mark_read" method="POST">{% csrf_token %}<input type="hidden" id="message_id" name="message_id" value="{this_message.id}"><input type="submit" value="Mark read"></form>
+            {% if message.unread == True %}
+            <form action="/penfriends/message/mark_read" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="message_id" value="{{message.id}}">
+                <button type="submit">Mark Read</button>
+            </form>
+            {% else %}
+            <form action="/penfriends/message/mark_unread" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="message_id" value="{{message.id}}">
+                <button type="submit">Mark Unread</button>
+            </form>
+            {% endif %}
             <br>
-            <form action="/message/delete" method="POST">{% csrf_token %}<input type="hidden" id="message_id" name="message_id" value="{this_message.id}"><input type="submit" value="Delete"></form>
+            <form action="/penfriends/message/delete" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="message.id" value="{{message.id}}">
+                <button type="submit">Delete</button>
+            </form>
         </div>
         <div class="body">
             <h3>Message</h3>
+
             <p>From: {{this_message.creator.first_name}} {{this_message.creator.last_name}}</p>
-            <p>Date: {{this_message.created_at}}</p>
-            <p>Subject: {{this_message.subject}}</p>
-            <p>Recipient: {{this_message.recipient.first_name}} {{this_message.recipient.last_name}}</p>
-            <p>Resident: {{this_message.pen_resident.first_name}} {{this_message.pen_resident.last_name}}</p>
-            <p>{{this_message.content}}</p>
-            <iframe src="{{this_message.attachment.url}}"></iframe>
+
+            <p>From: {{message.creator.first_name}} {{message.creator.last_name}}</p>
+            <p>To: {{message.recipient.first_name}} {{message.recipient.last_name}}</p>
+            <p>Date: {{message.created_at}}</p>
+            <p>Subject: {{message.subject}}</p>
+            <p>Resident: {{message.pen_resident.first_name}} {{message.pen_resident.last_name}}</p>
+            <p>{{message.content}}</p>
+            {% if message.attachment %}
+            <img src="{{message.attachment.url}}" alt="Message Attachment">
             <button><a href="{{this_message.attachment.url}}" download>Download</a></button>
-            
+            {% endif %}
+
         </div>
 </body>
 </html>
