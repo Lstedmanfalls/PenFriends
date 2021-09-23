@@ -93,6 +93,7 @@ def updatepost(request, post_id):
             update_post.title = request.POST['title']
             update_post.body = request.POST['body']
             update_post.save()
+        messages.success(request, "Post updated successfully!")
         return redirect(f'/penfriends/dashboard/admin')
 
 def deletepost(request, post_id):
