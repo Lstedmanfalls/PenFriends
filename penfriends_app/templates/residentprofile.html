@@ -1,81 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'normalize.css' %}">
-    <link rel="stylesheet" href="{% static 'skeleton.css' %}">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'adminstyle.css' %}">
     <title>Resident Profile</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
 </head>
 <body>
     <div class="container">
-        <div class="row"><div class="twelve columns"><br></div></div>
-        <div class="row">
-            <div class="one column"><br></div>
-            <div class="two columns">
-            <a href="/penfriends" class="button">Seeking PenFriends</a>
+        <nav>
+            <a href="/penfriends">Seeking PenFriends</a>
             {% if this_user.category == "admin" %}
-            <a href="/penfriends/dashboard/admin" class="button">My Admin Dashboard</a>
+            <a href="/penfriends/dashboard/admin">My Admin Dashboard</a>
             {% endif %}
             {% if this_user.category == "penpal" %}
-            <a href="/penfriends/dashboard/penpal" class="button">My PenFriend Dashboard</a>
+            <a href="/penfriends/dashboard/penpal">My PenFriend Dashboard</a>
             {% endif %}
-            <a href="/penfriends/inbox" class="button">Inbox ({{unread_message_count}})</a>
-            <a href="/logout" class="button">Logout</a>
-        </div>
-        <div class="two columns"><br></div>
-        <div class="six columns">
-            <h2>{{this_resident.first_name}} {{this_resident.last_name}}</h2>
+            <a href="/penfriends/inbox">Inbox ({{unread_message_count}})</a>
+            <a href="/logout">Logout</a>
+        </nav> 
+        <h1>{{this_resident.first_name}} {{this_resident.last_name}}</h1>
         {% if this_user.id == this_resident.creator.id %}
-            <form  class="sub_body" action="/penfriends/resident/{{this_resident.id}}/updateresident" method="Post" enctype="multipart/form-data">
-                {%csrf_token%}
-                <img id="profilepicture" src="{{ this_resident.picture.url }}" alt="profile pic">
-                <div class="form-group">
-                    <label for="picture">Picture</label>
-                    <input type="file" name="picture" accept="image/*">
-                </div>
-                <div class="form-group">
-                    <label for="first_name">First Name</label>
-                    <input type="text" name="first_name" value="{{this_resident.first_name}}">
-                </div>
-                <div class="form-group">
-                    <label for="last_name">Last Name</label>
-                    <input type="text" name="last_name" value="{{this_resident.last_name}}">
-                </div>
-                <div class="form-group">
-                    <label for="bio">Bio</label>
-                    <textarea name="bio">{{this_resident.bio}}</textarea>
-                </div>
-                <button class="btn btn-success btn-sm">Update</button>
-                </form>
-                <form action="/penfriends/resident/{{this_resident.id}}/delete" method="post">
-                    {% csrf_token %}
-                    <button class="btn btn-danger btn-sm">Delete</button>
-                </form>
-                {% if messages %}
-                <div class="alert alert-warning" role="alert">
-                    <ul class="messages">    
-                        {% for message in messages %}    
-                            <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>    
-                        {% endfor %}
-                    </ul>
-                </div>
-                {% endif %}
-            </form>
+        <form action="/penfriends/resident/{{this_resident.id}}/updateresident" method="POST" enctype="multipart/form-data">
+            {%csrf_token%}
+            <img id="profilepicture" src="{{ this_resident.picture.url }}" alt="profile pic">
+            <div>
+                <label for="picture">Picture</label>
+                <input type="file" name="picture" accept="image/*">
+            </div>
+            <div>
+                <label for="first_name">First Name</label>
+                <input type="text" name="first_name" value="{{this_resident.first_name}}">
+            </div>
+            <div>
+                <label for="last_name">Last Name</label>
+                <input type="text" name="last_name" value="{{this_resident.last_name}}">
+            </div>
+            <div>
+                <label for="bio">Bio</label>
+                <textarea name="bio">{{this_resident.bio}}</textarea>
+            </div>
+            <button class="btn btn-success btn-sm">Update</button>
+        </form>
+        <form action="/penfriends/resident/{{this_resident.id}}/delete" method="POST">
+            {% csrf_token %}
+            <button type="submit">Delete</button>
+        </form>
+        {% if messages %}
+        <div>
+            {% for message in messages %}    
+                <p>{{message}}</p>    
+            {% endfor %}
+        </div>
+        {% endif %}
         {% endif %}
         {% if this_user.id != this_resident.creator.id %}
-            <img id="profilepicture" src="{{ this_resident.picture.url }}" alt="profile pic">
-            <p>First Name: {{this_resident.first_name}}</p>
-            <p>Last Name: {{this_resident.last_name}}</p>
-            <p>Bio: {{this_resident.bio}}</p>
+        <img id="profilepicture" src="{{ this_resident.picture.url }}" alt="profile pic">
+        <p>First Name: {{this_resident.first_name}}</p>
+        <p>Last Name: {{this_resident.last_name}}</p>
+        <p>Bio: {{this_resident.bio}}</p>
         {% endif %}    
-        </div>
-        <div class="one column"><br></div>
-        </div>
     </div>    
 </body>
 </html>

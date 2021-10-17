@@ -1,60 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'normalize.css' %}">
-    <link rel="stylesheet" href="{% static 'skeleton.css' %}">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Message details</title>
+    <title>Message Details</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
 </head>
 <body>
     <div class="container">
-        <div class="row"><div class="twelve columns"><br></div></div>
-        <div class="row">
-        <div class="two columns">
-            <a href="/penfriends" class="button">Seeking PenFriends</a><br>
+        <nav>
+            <a href="/penfriends">Seeking PenFriends</a>
             {% if this_user.category == "admin" %}
-            <a href="/penfriends/dashboard/admin" class="button">My Admin Dashboard</a><br>
+            <a href="/penfriends/dashboard/admin">My Admin Dashboard</a>
             {% endif %}
             {% if this_user.category == "penpal" %}
-            <a href="/penfriends/dashboard/penpal" class="button">My PenFriend Dashboard</a><br>
+            <a href="/penfriends/dashboard/penpal">My PenFriend Dashboard</a>
             {% endif %}
-            <a href="/penfriends/inbox" class="button">Inbox ({{unread_message_count}})</a><br>
-            <a href="/logout" class="button">Logout</a>
-        </div>
-        <div class="one column"><br></div>
-        <div class="four columns">
-            <br>
-            <form action="/penfriends/message/new_message" method="POST">
-                {% csrf_token %}
-                <button type="submit">Reply</button>
-            </form>
-            <br>
-            {% if message.unread == True %}
-            <form action="/penfriends/message/mark_read" method="POST">
-                {% csrf_token %}
-                <input type="hidden" name="message_id" value="{{message.id}}">
-                <button type="submit">Mark Read</button>
-            </form>
-            {% else %}
-            <form action="/penfriends/message/mark_unread" method="POST">
-                {% csrf_token %}
-                <input type="hidden" name="message_id" value="{{message.id}}">
-                <button type="submit">Mark Unread</button>
-            </form>
-            {% endif %}
-            <br>
-            <form action="/penfriends/message/delete" method="POST">
-                {% csrf_token %}
-                <input type="hidden" name="message_id" value="{{message.id}}">
-                <button type="submit">Delete</button>
-            </form>
-        </div>  
-        <div class="four columns">
-            <h3>Message</h3>
-            
+            <a href="/penfriends/inbox">Inbox ({{unread_message_count}})</a>
+            <a href="/logout">Logout</a>
+        </nav>
+        <form action="/penfriends/message/new_message" method="POST">
+            {% csrf_token %}
+            <button type="submit">Reply</button>
+        </form>
+        {% if message.unread == True %}
+        <form action="/penfriends/message/mark_read" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="message_id" value="{{message.id}}">
+            <button type="submit">Mark Read</button>
+        </form>
+        {% else %}
+        <form action="/penfriends/message/mark_unread" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="message_id" value="{{message.id}}">
+            <button type="submit">Mark Unread</button>
+        </form>
+        {% endif %}
+        <form action="/penfriends/message/delete" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="message_id" value="{{message.id}}">
+            <button type="submit">Delete</button>
+        </form>
+            <h1>Message</h1>
             <p>From: {{message.creator.first_name}} {{message.creator.last_name}}</p>
             <p>To: {{message.recipient.first_name}} {{message.recipient.last_name}}</p>
             <p>Date: {{message.created_at}}</p>
@@ -63,11 +52,8 @@
             <p>{{message.content}}</p>
             {% if message.attachment %}
             <img src="{{message.attachment.url}}" alt="Message Attachment">
-            <button><a href="{{this_message.attachment.url}}" download>Download</a></button>
+            <a href="{{this_message.attachment.url}}" download>Download</a>
             {% endif %}
-        </div>
-        <div class="one column"><br></div>
-        </div>
     </div>
 </body>
 </html>
