@@ -1,5 +1,5 @@
-# Balsamiq wireframe file
-*.bmpr
+# Environmental Variable
+*.env
 
 ### Django ###
 *.log
