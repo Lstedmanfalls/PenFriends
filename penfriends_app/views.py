@@ -7,7 +7,7 @@ from login_registration_app.models import User
 import bcrypt
 
 # Seeking Penfriends Page (Home)
-def penfriends(request): #GET REQUEST
+def home(request): #GET REQUEST
     if "user_id" not in request.session:
         messages.error(request, "You must be logged in to view this site")
         return redirect ("/")
@@ -22,7 +22,7 @@ def penfriends(request): #GET REQUEST
         "all_the_posts": all_the_posts,
         "unread_message_count": unread_message_count
     }
-    return render(request, "penfriends.html", context)
+    return render(request, "home.html", context)
 
 def become_penfriend(request): #POST REQUEST
     if request.method != "POST":
@@ -36,7 +36,7 @@ def become_penfriend(request): #POST REQUEST
     return redirect("/penfriends/dashboard/penpal")
 
 # Admin Dashboard Page
-def admindash(request):
+def dash_admin(request):
     if "user_id" not in request.session:
         messages.error(request, "You must be logged in to view this site")
         return redirect ("/")
@@ -49,25 +49,27 @@ def admindash(request):
             "this_user": this_user,
             "unread_message_count": unread_message_count
         }
-        return render(request,'admindash.html', context)
+        return render(request,'dash_admin.html', context)
 
-def createresident(request):
+def create_resident(request):
     if "user_id" not in request.session:
         messages.error(request, "You must be logged in to view this site")
         return redirect ("/")
     else:
         this_user = User.objects.get(id = request.session['user_id'])
         if request.method == "POST" and this_user.category == "admin":
-            Resident.objects.create(
+            create = Resident.objects.create(
                 first_name = request.POST['first_name'],
                 last_name = request.POST['last_name'],
-                picture = request.FILES['picture'],
                 bio = request.POST['bio'],
                 creator = this_user
                 )
+            if request.FILES:
+                create.picture = request.FILES['picture']
+                create.save()
         return redirect(f'/penfriends/dashboard/admin')
 
-def createpost(request):
+def create_post(request):
     if "user_id" not in request.session:
         messages.error(request, "You must be logged in to view this site")
         return redirect ("/")
@@ -83,7 +85,7 @@ def createpost(request):
             )
         return redirect(f'/penfriends/dashboard/admin')
 
-def updatepost(request, post_id):
+def update_post(request, post_id):
     if "user_id" not in request.session:
         messages.error(request, "You must be logged in to view this site")
         return redirect ("/")
@@ -96,7 +98,7 @@ def updatepost(request, post_id):
         messages.success(request, "Post updated successfully!")
         return redirect(f'/penfriends/dashboard/admin')
 
-def deletepost(request, post_id):
+def delete_post(request, post_id):
     if "user_id" not in request.session:
         messages.error(request, "You must be logged in to view this site")
         return redirect ("/")
@@ -106,8 +108,8 @@ def deletepost(request, post_id):
             this_post.delete()
             return redirect(f'/penfriends/dashboard/admin')
 
-# Penpal Dashboard Page
-def penpal_dash(request): #GET REQUEST
+# Penfriend Dashboard Page
+def dash_penfriend(request): #GET REQUEST
     if "user_id" not in request.session:
         messages.error(request, "You must be logged in to view this site")
         return redirect ("/")
@@ -126,9 +128,9 @@ def penpal_dash(request): #GET REQUEST
                 "all_the_residents": all_the_residents,
                 "unread_message_count": unread_message_count
             }
-            return render(request, "penpal_dash.html", context)
+            return render(request, "dash_penfriend.html", context)
 
-def update_penpal_password(request): #POST REQUEST
+def update_penfriend_password(request): #POST REQUEST
     if request.method != "POST":
         return redirect("/")
     elif request.method == "POST":
@@ -140,7 +142,7 @@ def update_penpal_password(request): #POST REQUEST
         messages.success(request, "Password updated")
     return redirect("/penfriends/dashboard/penpal")
 
-def remove_penpal(request): #POST Request
+def remove_penfriend(request): #POST Request
     if request.method != "POST":
         return redirect("/")
     this_resident = Resident.objects.get(id = request.POST["resident_id"])
@@ -151,7 +153,7 @@ def remove_penpal(request): #POST Request
     return redirect("/penfriends/dashboard/penpal")
 
 # Resident Profile Page
-def residentprofile(request, resident_id):
+def resident_profile(request, resident_id):
     if "user_id" not in request.session:
         messages.error(request, "You must be logged in to view this site")
         return redirect ("/")
@@ -166,9 +168,9 @@ def residentprofile(request, resident_id):
             "this_user": this_user,
             "unread_message_count": unread_message_count,
         }
-        return render(request, "residentprofile.html", context)
+        return render(request, "resident_profile.html", context)
 
-def updateresident(request, resident_id):
+def update_resident(request, resident_id):
     if "user_id" not in request.session:
         messages.error(request, "You must be logged in to view this site")
         return redirect ("/")
@@ -183,7 +185,7 @@ def updateresident(request, resident_id):
         messages.success(request, "Resident info updated successfully!")
         return redirect(f'/penfriends/resident/{resident_id}')   
 
-def deleteresident(request, resident_id):
+def delete_resident(request, resident_id):
     if "user_id" not in request.session:
         messages.error(request, "You must be logged in to view this site")
         return redirect ("/")
@@ -222,10 +224,22 @@ def mark_unread(request):
     this_message.save()
     return redirect("/penfriends/inbox")
 
-def delete_message(request): 
-    this_message = Message.objects.get(id = request.POST["message_id"])
-    this_message.delete()
-    return redirect("/penfriends/inbox")
+# Sent Message Page
+def sent(request):
+    if "user_id" not in request.session:
+        messages.error(request, "You must be logged in to view this site")
+        return redirect ("/")
+    else:
+        this_user = User.objects.get(id=request.session["user_id"])
+        if this_user.recipient_messages:
+            unread_messages = this_user.recipient_messages.filter(unread = True)
+            unread_message_count = unread_messages.count()
+        context = {
+        "this_user": this_user,
+        "unread_message_count": unread_message_count,
+        "user_messages": Message.objects.filter(creator = this_user).order_by("-created_at"),
+        }
+        return render (request, "sent.html", context)
 
 # Create Message Page
 def new_message(request):
@@ -246,7 +260,7 @@ def new_message(request):
             "all_recipients": all_recipients,
             "unread_message_count": unread_message_count
         }
-        return render(request, "newmsg.html", context)
+        return render(request, "new_msg.html", context)
 
 def create_message(request):
     if "user_id" not in request.session:
@@ -260,13 +274,14 @@ def create_message(request):
             create = Message.objects.create(
                 subject = request.POST['subject'],
                 content = request.POST['content'],
-                attachment = request.FILES['attachment'],
                 creator = this_user,
                 recipient = recipient,
                 pen_resident = pen_resident,
-            )
-            message_id = create.id
-            return redirect(f'/penfriends/message/{message_id}')
+                )
+            if request.FILES:
+                create.attachment = request.FILES['attachment']
+                create.save()
+    return redirect('/penfriends/sent')
 
 # View Message Page
 def message(request, message_id):

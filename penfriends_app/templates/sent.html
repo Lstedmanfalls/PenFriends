@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-US">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{this_user.first_name}}'s Inbox</title>
+    <title>Title</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'style.css' %}">
 </head>
@@ -22,11 +22,11 @@
             <a href ="/penfriends/sent">Sent</a>
             <a href="/logout">Logout</a>
         </nav>
-        <h1>Inbox</h1>
+        <h1>Sent Messages</h1>
         {% if user_messages %}
         <table>
             <thead>
-                <td>From</td>
+                <td>To</td>
                 <td>Date</td>
                 <td>Subject</td>
                 <td>Resident</td>
@@ -36,7 +36,7 @@
             {% for message in user_messages %}
             <tbody>
                 <tr>
-                    <td>{{message.creator.first_name}} {{message.creator.last_name}}</td>
+                    <td>{{message.recipient.first_name}} {{message.recipient.last_name}}</td>
                     <td>{{message.created_at}}</td>
                     <td>{{message.subject}}</td>
                     <td>{{message.pen_resident.first_name}} {{message.pen_resident.last_name}}</td>
@@ -65,9 +65,9 @@
             {% endfor %}
         </table>
         {% else %}
-        <p>You have no messages at this time</p>
+        <p>You have no sent messages</p>
         {% endif %}
-        <a href="/penfriends/message/new_message">Compose new message</a> 
+        <a href="/penfriends/message/new_message">Compose new message</a>
     </div>
 </body>
 </html>

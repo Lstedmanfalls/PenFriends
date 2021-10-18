@@ -13,19 +13,22 @@
         <nav>
             <a href="/penfriends">Seeking PenFriends</a>
             {% if this_user.category == "admin" %}
-            <a href="/penfriends/dashboard/admin">My Admin Dashboard</a>
+            <a href="/penfriends/dashboard/admin">Admin Dashboard</a>
             {% endif %}
             {% if this_user.category == "penpal" %}
-            <a href="/penfriends/dashboard/penpal">My PenFriend Dashboard</a>
+            <a href="/penfriends/dashboard/penpal">PenFriend Dashboard</a>
             {% endif %}
-            <a href="/penfriends/inbox">Inbox ({{unread_message_count}})</a>
+            <span><a href="/penfriends/inbox">Inbox</a>({{unread_message_count}})</span>
+            <a href ="/penfriends/sent">Sent</a>
             <a href="/logout">Logout</a>
         </nav> 
         <h1>{{this_resident.first_name}} {{this_resident.last_name}}</h1>
         {% if this_user.id == this_resident.creator.id %}
         <form action="/penfriends/resident/{{this_resident.id}}/updateresident" method="POST" enctype="multipart/form-data">
-            {%csrf_token%}
+            {% csrf_token %}
+            {% if this_resident.picture %}
             <img id="profilepicture" src="{{ this_resident.picture.url }}" alt="profile pic">
+            {% endif %}
             <div>
                 <label for="picture">Picture</label>
                 <input type="file" name="picture" accept="image/*">
@@ -57,7 +60,9 @@
         {% endif %}
         {% endif %}
         {% if this_user.id != this_resident.creator.id %}
+        {% if this_resident.picture %}
         <img id="profilepicture" src="{{ this_resident.picture.url }}" alt="profile pic">
+        {% endif %}    
         <p>First Name: {{this_resident.first_name}}</p>
         <p>Last Name: {{this_resident.last_name}}</p>
         <p>Bio: {{this_resident.bio}}</p>

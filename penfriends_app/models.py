@@ -16,7 +16,7 @@ from login_registration_app.models import User
 class Resident(models.Model):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
-    picture = models.ImageField(blank=True)
+    picture = models.ImageField(blank=True, null=True)
     bio = models.TextField()
     creator = models.ForeignKey(User, related_name="residents", on_delete = models.CASCADE)
     penfriends = models.ManyToManyField(User, related_name="penpal_residents")
@@ -29,7 +29,7 @@ class Resident(models.Model):
 class Message(models.Model):
     subject = models.CharField(max_length=255)
     content = models.TextField()
-    attachment = models.FileField(upload_to='media',blank=True)
+    attachment = models.FileField(blank=True, null=True, upload_to='media')
     unread = models.BooleanField(default=True)
     creator = models.ForeignKey(User, related_name="messages", on_delete = models.CASCADE)
     recipient = models.ForeignKey(User, related_name="recipient_messages", on_delete=models.CASCADE)
