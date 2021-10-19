@@ -164,6 +164,7 @@ input, select{
     border:.1rem solid black;
     font-size:1.5rem;
     border-radius: 2rem;
+    background-color:white;
 }
 
 select{

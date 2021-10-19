@@ -4,5 +4,5 @@
 <h1>Login & Registration</h2>
 <h2>Mobile</h2>
 <img src="demo/login_mobile.JPG">
-<h2>PC</h2>
-<img src="demo/login_pc.JPG">
+<h2>Web</h2>
+<img src="demo/login_web.JPG">

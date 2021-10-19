@@ -42,7 +42,7 @@ p{
 #side_bar{
     display:flex;
     flex-direction: column;
-    border:.1rem solid black;
+    border:.1rem solid darkgrey;
     min-height:calc(100vh - 2.2rem);
     padding:1rem 2rem;
 }
@@ -84,7 +84,7 @@ nav span{
 #container{
     border-width: .1rem .1rem .1rem 0;
     border-style: solid;
-    border-color:black;
+    border-color:darkgrey;
     width:100%;
     padding:2rem 2rem;
     background-color:rgba(227, 235, 243, 0.3);
