@@ -9,65 +9,81 @@
     <link rel="stylesheet" href="{% static 'style.css' %}">
 </head>
 <body>
-    <div class="container">
-        <nav>
-            <a href="/penfriends">Seeking PenFriends</a>
-            {% if this_user.category == "admin" %}
-            <a href="/penfriends/dashboard/admin">Admin Dashboard</a>
+    <div id="wrapper">
+        <div id ="side_bar">
+            <p id="logo"><span>P</span>en<span>F</span>riends</p>
+            <nav>
+                <div>
+                    <img src="https://fonts.gstatic.com/s/i/materialiconsoutlined/people/v22/24px.svg"><a href="/penfriends">Seeking</a>
+                </div>
+                    {% if this_user.category == "admin" %}
+                <div>
+                    <img src="https://fonts.gstatic.com/s/i/materialiconsoutlined/grid_view/v12/24px.svg"><a href="/penfriends/dashboard/admin">Dashboard</a>
+                    </div>
+                {% endif %}
+                {% if this_user.category == "penpal" %}
+                <div>
+                    <img src="https://fonts.gstatic.com/s/i/materialiconsoutlined/grid_view/v12/24px.svg"><a href="/penfriends/dashboard/penpal">Dashboard</a>
+                </div>
+                {% endif %}
+                <div>
+                    <img src="https://fonts.gstatic.com/s/i/materialiconsoutlined/mail/v15/24px.svg"><span><a href="/penfriends/inbox">Inbox</a> ({{unread_message_count}})</span>
+                </div>
+                <div>
+                    <img src="https://fonts.gstatic.com/s/i/materialiconsoutlined/send/v19/24px.svg"><a href ="/penfriends/sent">Sent</a>
+                </div>
+                <div>
+                    <img src="https://fonts.gstatic.com/s/i/materialiconsoutlined/logout/v12/24px.svg"><a href="/logout">Logout</a>
+                </div>
+            </nav>
+        </div>
+        <div id ="container">
+            {% if user_messages %}
+            <table>
+                <thead>
+                    <td>From</td>
+                    <td>Date</td>
+                    <td>Subject</td>
+                    <td>Resident</td>
+                    <td>Attachment?</td>
+                    <td>Actions</td>
+                </thead>
+                {% for message in user_messages %}
+                <tbody>
+                    <tr>
+                        <td>{{message.creator.first_name}} {{message.creator.last_name}}</td>
+                        <td>{{message.created_at}}</td>
+                        <td>{{message.subject}}</td>
+                        <td>{{message.pen_resident.first_name}} {{message.pen_resident.last_name}}</td>
+                        {% if message.attachment %}<td>Yes</td>{% else %}<td>No</td>{% endif %}
+                        <td>
+                            <form action="/penfriends/message/{{message.id}}" method="POST">
+                                {% csrf_token %}
+                                <button type="submit">View</button>
+                            </form>
+                            {% if message.unread == True %}
+                            <form action="/penfriends/message/mark_read" method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="message_id" value="{{message.id}}">
+                                <button type="submit">Mark Read</button>
+                            </form>
+                            {% else %}
+                            <form action="/penfriends/message/mark_unread" method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="message_id" value="{{message.id}}">
+                                <button type="submit">Mark Unread</button>
+                            </form>
+                            {% endif %}
+                        </td>
+                    </tr>
+                </tbody>
+                {% endfor %}
+            </table>
+            {% else %}
+            <p>You have no messages at this time</p>
             {% endif %}
-            {% if this_user.category == "penpal" %}
-            <a href="/penfriends/dashboard/penpal">PenFriend Dashboard</a>
-            {% endif %}
-            <span><a href="/penfriends/inbox">Inbox</a>({{unread_message_count}})</span>
-            <a href ="/penfriends/sent">Sent</a>
-            <a href="/logout">Logout</a>
-        </nav>
-        <h1>Inbox</h1>
-        {% if user_messages %}
-        <table>
-            <thead>
-                <td>From</td>
-                <td>Date</td>
-                <td>Subject</td>
-                <td>Resident</td>
-                <td>Attachment?</td>
-                <td>Actions</td>
-            </thead>
-            {% for message in user_messages %}
-            <tbody>
-                <tr>
-                    <td>{{message.creator.first_name}} {{message.creator.last_name}}</td>
-                    <td>{{message.created_at}}</td>
-                    <td>{{message.subject}}</td>
-                    <td>{{message.pen_resident.first_name}} {{message.pen_resident.last_name}}</td>
-                    {% if message.attachment %}<td>Yes</td>{% else %}<td>No</td>{% endif %}
-                    <td>
-                        <form action="/penfriends/message/{{message.id}}" method="POST">
-                            {% csrf_token %}
-                            <button type="submit">View</button>
-                        </form>
-                        {% if message.unread == True %}
-                        <form action="/penfriends/message/mark_read" method="POST">
-                            {% csrf_token %}
-                            <input type="hidden" name="message_id" value="{{message.id}}">
-                            <button type="submit">Mark Read</button>
-                        </form>
-                        {% else %}
-                        <form action="/penfriends/message/mark_unread" method="POST">
-                            {% csrf_token %}
-                            <input type="hidden" name="message_id" value="{{message.id}}">
-                            <button type="submit">Mark Unread</button>
-                        </form>
-                        {% endif %}
-                    </td>
-                </tr>
-            </tbody>
-            {% endfor %}
-        </table>
-        {% else %}
-        <p>You have no messages at this time</p>
-        {% endif %}
-        <a href="/penfriends/message/new_message">Compose new message</a> 
+            <a href="/penfriends/message/new_message">Compose New Message</a> 
+        </div>
     </div>
 </body>
 </html>

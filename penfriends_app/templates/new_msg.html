@@ -9,66 +9,82 @@
     <link rel="stylesheet" href="{% static 'style.css' %}">
 </head>
 <body>
-    <div class="container">
-        <nav>
-            <a href="/penfriends">Seeking PenFriends</a>
-            {% if this_user.category == "admin" %}
-            <a href="/penfriends/dashboard/admin">Admin Dashboard</a>
-            {% endif %}
-            {% if this_user.category == "penpal" %}
-            <a href="/penfriends/dashboard/penpal">PenFriend Dashboard</a>
-            {% endif %}
-            <span><a href="/penfriends/inbox">Inbox</a>({{unread_message_count}})</span>
-            <a href ="/penfriends/sent">Sent</a>
-            <a href="/logout">Logout</a>
-        </nav>
-        <h1>Create New Message</h1>
-        <form action="/penfriends/message/create_message" method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            <div>
-                <label for="subject">Subject</label>
-                <input type="text" name="subject">
-            </div>
-            <div>
-                <label for="recipient_id">Recipient</label>
-                <select name="recipient_id">
-                    {% for recipient in all_recipients %}
-                    <option value="{{recipient.id}}">{{recipient.first_name}} {{recipient.last_name}}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div>
-                <label for="resident_id">Resident</label>
-                <select name="resident_id" >
+    <div id="wrapper">
+        <div id ="side_bar">
+            <p id="logo"><span>P</span>en<span>F</span>riends</p>
+            <nav>
+                <div>
+                    <img src="https://fonts.gstatic.com/s/i/materialiconsoutlined/people/v22/24px.svg"><a href="/penfriends">Seeking</a>
+                </div>
+                    {% if this_user.category == "admin" %}
+                <div>
+                    <img src="https://fonts.gstatic.com/s/i/materialiconsoutlined/grid_view/v12/24px.svg"><a href="/penfriends/dashboard/admin">Dashboard</a>
+                    </div>
+                {% endif %}
                 {% if this_user.category == "penpal" %}
-                    {% for resident in this_user.penpal_residents.all %}
-                    <option value="{{resident.id}}">{{resident.first_name}} {{resident.last_name}}</option>  
+                <div>
+                    <img src="https://fonts.gstatic.com/s/i/materialiconsoutlined/grid_view/v12/24px.svg"><a href="/penfriends/dashboard/penpal">Dashboard</a>
+                </div>
+                {% endif %}
+                <div>
+                    <img src="https://fonts.gstatic.com/s/i/materialiconsoutlined/mail/v15/24px.svg"><span><a href="/penfriends/inbox">Inbox</a> ({{unread_message_count}})</span>
+                </div>
+                <div>
+                    <img src="https://fonts.gstatic.com/s/i/materialiconsoutlined/send/v19/24px.svg"><a href ="/penfriends/sent">Sent</a>
+                </div>
+                <div>
+                    <img src="https://fonts.gstatic.com/s/i/materialiconsoutlined/logout/v12/24px.svg"><a href="/logout">Logout</a>
+                </div>
+            </nav>
+        </div>
+        <div id="container">
+            <form action="/penfriends/message/create_message" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div>
+                    <label for="subject">Subject</label>
+                    <input type="text" name="subject">
+                </div>
+                <div>
+                    <label for="recipient_id">Recipient</label>
+                    <select name="recipient_id">
+                        {% for recipient in all_recipients %}
+                        <option value="{{recipient.id}}">{{recipient.first_name}} {{recipient.last_name}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div>
+                    <label for="resident_id">Resident</label>
+                    <select name="resident_id" >
+                    {% if this_user.category == "penpal" %}
+                        {% for resident in this_user.penpal_residents.all %}
+                        <option value="{{resident.id}}">{{resident.first_name}} {{resident.last_name}}</option>  
+                        {% endfor %}
+                    {% endif%}
+                    {% if this_user.category == "admin" %}
+                        {% for resident in this_user.residents.all %}
+                        <option value="{{resident.id}}">{{resident.first_name}} {{resident.last_name}}</option>
+                        {% endfor %}
+                    {% endif%}
+                    </select>
+                </div>
+                <div>
+                    <label for="content">Content</label>
+                    <textarea name="content"></textarea>
+                </div>
+                <div>
+                    <label for="attachment">Attachment</label>
+                    <input type="file" name="attachment">
+                </div>
+                <button type="submit">Send</button>
+                {% if messages %}
+                <div>   
+                    {% for message in messages %}    
+                    <p>{{ message }}</p>    
                     {% endfor %}
-                {% endif%}
-                {% if this_user.category == "admin" %}
-                    {% for resident in this_user.residents.all %}
-                    <option value="{{resident.id}}">{{resident.first_name}} {{resident.last_name}}</option>
-                    {% endfor %}
-                {% endif%}
-                </select>
-            </div>
-            <div>
-                <label for="content">Content</label>
-                <textarea name="content"></textarea>
-            </div>
-            <div>
-                <label for="attachment">Attachment</label>
-                <input type="file" name="attachment">
-            </div>
-            <button type="submit">Send</button>
-            {% if messages %}
-            <div>   
-                {% for message in messages %}    
-                <p>{{ message }}</p>    
-                {% endfor %}
-            </div>
-            {% endif %}
-        </form>
+                </div>
+                {% endif %}
+            </form>
+        </div>
     </div>    
 </body>
 </html>

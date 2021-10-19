@@ -25,24 +25,6 @@ html{
 }
 }
 
-#container{
-    position:relative;
-    min-height:100vh;
-}
-
-#container::after{
-    content:"";
-    background-image:url("group_beach.jpg");
-    opacity:.6;
-    top:0;
-    left:0;
-    bottom:0;
-    right:0;
-    position:absolute;
-    z-index:-1;
-    background-size: cover;
-}
-
 header{
     display:flex;
     flex-direction:column;
@@ -62,7 +44,7 @@ span{
 }
 
 h1{
-    font-size:4.5rem;
+    font-size:4rem;
     font-family:'Times New Roman', Times, serif;
     font-style: italic;
     text-align:center;

@@ -9,21 +9,36 @@
     <link rel="stylesheet" href="{% static 'style.css' %}">
 </head>
 <body>
-    <div class="container">
-        <nav>
-            <a href="/penfriends">Seeking PenFriends</a>
-            {% if this_user.category == "admin" %}
-            <a href="/penfriends/dashboard/admin">Admin Dashboard</a>
-            {% endif %}
-            {% if this_user.category == "penpal" %}
-            <a href="/penfriends/dashboard/penpal">PenFriend Dashboard</a>
-            {% endif %}
-            <span><a href="/penfriends/inbox">Inbox</a>({{unread_message_count}})</span>
-            <a href ="/penfriends/sent">Sent</a>
-            <a href="/logout">Logout</a>
-        </nav>
-        <div>
-            <p>Hi, {{this_user.first_name}} {{this_user.last_name}}</p>
+    <div id="wrapper">
+        <div id ="side_bar">
+            <p id="logo"><span>P</span>en<span>F</span>riends</p>
+            <nav>
+                <div>
+                    <img src="https://fonts.gstatic.com/s/i/materialiconsoutlined/people/v22/24px.svg"><a href="/penfriends">Seeking</a>
+                </div>
+                    {% if this_user.category == "admin" %}
+                <div>
+                    <img src="https://fonts.gstatic.com/s/i/materialiconsoutlined/grid_view/v12/24px.svg"><a href="/penfriends/dashboard/admin">Dashboard</a>
+                    </div>
+                {% endif %}
+                {% if this_user.category == "penpal" %}
+                <div>
+                    <img src="https://fonts.gstatic.com/s/i/materialiconsoutlined/grid_view/v12/24px.svg"><a href="/penfriends/dashboard/penpal">Dashboard</a>
+                </div>
+                {% endif %}
+                <div>
+                    <img src="https://fonts.gstatic.com/s/i/materialiconsoutlined/mail/v15/24px.svg"><span><a href="/penfriends/inbox">Inbox</a> ({{unread_message_count}})</span>
+                </div>
+                <div>
+                    <img src="https://fonts.gstatic.com/s/i/materialiconsoutlined/send/v19/24px.svg"><a href ="/penfriends/sent">Sent</a>
+                </div>
+                <div>
+                    <img src="https://fonts.gstatic.com/s/i/materialiconsoutlined/logout/v12/24px.svg"><a href="/logout">Logout</a>
+                </div>
+            </nav>
+        </div>
+        <div id ="container">
+            <h1>Hi, {{this_user.first_name}}</h1>
             <h1>Add New Resident</h1>
             <form action="/penfriends/dashboard/admin/createresident" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
@@ -55,31 +70,31 @@
                 </form>
                 {% endfor%}                
             </div>
-        </div>
-        <div>
-            <h1>Add New Post</h1>
-            <form action="/penfriends/dashboard/admin/createpost" method="POST">
-                {% csrf_token %}
-                <div>
-                    <label for="title">Title</label>
-                    <input type="text" name="title">
-                </div>
-                <div>
-                    <label for="for_resident">Choose a resident:</label>
-                    <select name="for_resident">
-                        {% for resident in this_user.residents.all%}
-                        <option value="{{resident.id}}">{{resident.first_name}} {{resident.last_name}}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div>
-                    <label for="body">Body</label>
-                    <textarea name="body"></textarea>
-                </div>
-                <button type="submit">Add Post</button>  
-            </form>
             <div>
-                <h3>My Posts</h3>
+                <h1>Add New Post</h1>
+                <form action="/penfriends/dashboard/admin/createpost" method="POST">
+                    {% csrf_token %}
+                    <div>
+                        <label for="title">Title</label>
+                        <input type="text" name="title">
+                    </div>
+                    <div>
+                        <label for="for_resident">Choose a resident:</label>
+                        <select name="for_resident">
+                            {% for resident in this_user.residents.all%}
+                            <option value="{{resident.id}}">{{resident.first_name}} {{resident.last_name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div>
+                        <label for="body">Body</label>
+                        <textarea name="body"></textarea>
+                    </div>
+                    <button type="submit">Add Post</button>  
+                </form>
+            </div>
+            <div>
+                <h1>My Posts</h1>
                 {% for resident in this_user.residents.all %}
                     {% for post in resident.res_posts.all %}
                     <form action="/penfriends/resident/{{post.id}}/updatepost" method="POST">

@@ -9,64 +9,80 @@
     <link rel="stylesheet" href="{% static 'style.css' %}">
 </head>
 <body>
-    <div class="container">
-        <nav>
-            <a href="/penfriends">Seeking PenFriends</a>
-            {% if this_user.category == "admin" %}
-            <a href="/penfriends/dashboard/admin">Admin Dashboard</a>
+    <div id="wrapper">
+        <div id ="side_bar">
+            <p id="logo"><span>P</span>en<span>F</span>riends</p>
+            <nav>
+                <div>
+                    <img src="https://fonts.gstatic.com/s/i/materialiconsoutlined/people/v22/24px.svg"><a href="/penfriends">Seeking</a>
+                </div>
+                    {% if this_user.category == "admin" %}
+                <div>
+                    <img src="https://fonts.gstatic.com/s/i/materialiconsoutlined/grid_view/v12/24px.svg"><a href="/penfriends/dashboard/admin">Dashboard</a>
+                    </div>
+                {% endif %}
+                {% if this_user.category == "penpal" %}
+                <div>
+                    <img src="https://fonts.gstatic.com/s/i/materialiconsoutlined/grid_view/v12/24px.svg"><a href="/penfriends/dashboard/penpal">Dashboard</a>
+                </div>
+                {% endif %}
+                <div>
+                    <img src="https://fonts.gstatic.com/s/i/materialiconsoutlined/mail/v15/24px.svg"><span><a href="/penfriends/inbox">Inbox</a> ({{unread_message_count}})</span>
+                </div>
+                <div>
+                    <img src="https://fonts.gstatic.com/s/i/materialiconsoutlined/send/v19/24px.svg"><a href ="/penfriends/sent">Sent</a>
+                </div>
+                <div>
+                    <img src="https://fonts.gstatic.com/s/i/materialiconsoutlined/logout/v12/24px.svg"><a href="/logout">Logout</a>
+                </div>
+            </nav>
+        </div>
+        <div id="container">
+            {% if this_user.id == this_resident.creator.id %}
+            <form action="/penfriends/resident/{{this_resident.id}}/updateresident" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% if this_resident.picture %}
+                <img id="profilepicture" src="{{ this_resident.picture.url }}" alt="profile pic">
+                {% endif %}
+                <div>
+                    <label for="picture">Picture</label>
+                    <input type="file" name="picture" accept="image/*">
+                </div>
+                <div>
+                    <label for="first_name">First Name</label>
+                    <input type="text" name="first_name" value="{{this_resident.first_name}}">
+                </div>
+                <div>
+                    <label for="last_name">Last Name</label>
+                    <input type="text" name="last_name" value="{{this_resident.last_name}}">
+                </div>
+                <div>
+                    <label for="bio">Bio</label>
+                    <textarea name="bio">{{this_resident.bio}}</textarea>
+                </div>
+                <button class="btn btn-success btn-sm">Update</button>
+            </form>
+            <form action="/penfriends/resident/{{this_resident.id}}/delete" method="POST">
+                {% csrf_token %}
+                <button type="submit">Delete</button>
+            </form>
+            {% if messages %}
+            <div>
+                {% for message in messages %}    
+                    <p>{{message}}</p>    
+                {% endfor %}
+            </div>
             {% endif %}
-            {% if this_user.category == "penpal" %}
-            <a href="/penfriends/dashboard/penpal">PenFriend Dashboard</a>
             {% endif %}
-            <span><a href="/penfriends/inbox">Inbox</a>({{unread_message_count}})</span>
-            <a href ="/penfriends/sent">Sent</a>
-            <a href="/logout">Logout</a>
-        </nav> 
-        <h1>{{this_resident.first_name}} {{this_resident.last_name}}</h1>
-        {% if this_user.id == this_resident.creator.id %}
-        <form action="/penfriends/resident/{{this_resident.id}}/updateresident" method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
+            {% if this_user.id != this_resident.creator.id %}
             {% if this_resident.picture %}
             <img id="profilepicture" src="{{ this_resident.picture.url }}" alt="profile pic">
+            {% endif %}    
+            <p>First Name: {{this_resident.first_name}}</p>
+            <p>Last Name: {{this_resident.last_name}}</p>
+            <p>Bio: {{this_resident.bio}}</p>
             {% endif %}
-            <div>
-                <label for="picture">Picture</label>
-                <input type="file" name="picture" accept="image/*">
-            </div>
-            <div>
-                <label for="first_name">First Name</label>
-                <input type="text" name="first_name" value="{{this_resident.first_name}}">
-            </div>
-            <div>
-                <label for="last_name">Last Name</label>
-                <input type="text" name="last_name" value="{{this_resident.last_name}}">
-            </div>
-            <div>
-                <label for="bio">Bio</label>
-                <textarea name="bio">{{this_resident.bio}}</textarea>
-            </div>
-            <button class="btn btn-success btn-sm">Update</button>
-        </form>
-        <form action="/penfriends/resident/{{this_resident.id}}/delete" method="POST">
-            {% csrf_token %}
-            <button type="submit">Delete</button>
-        </form>
-        {% if messages %}
-        <div>
-            {% for message in messages %}    
-                <p>{{message}}</p>    
-            {% endfor %}
-        </div>
-        {% endif %}
-        {% endif %}
-        {% if this_user.id != this_resident.creator.id %}
-        {% if this_resident.picture %}
-        <img id="profilepicture" src="{{ this_resident.picture.url }}" alt="profile pic">
-        {% endif %}    
-        <p>First Name: {{this_resident.first_name}}</p>
-        <p>Last Name: {{this_resident.last_name}}</p>
-        <p>Bio: {{this_resident.bio}}</p>
-        {% endif %}    
+        </div>    
     </div>    
 </body>
 </html>
