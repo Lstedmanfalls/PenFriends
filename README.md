@@ -3,8 +3,8 @@
 <p>Python internal email web app, created for activity coordinators to attract and facilitate penpals for senior care residents</p>
 <h1>Login & Registration</h2>
 <h2>Mobile</h2>
-<img src="demo/mobile_login.JPG">
+<img src="demo/login_mobile.JPG">
 <h2>Web</h2>
-<img src="demo/web_login.JPG">
+<img src="demo/login_web.JPG">
 <h1>Seeking PenFriends Wall</h1>
-<img src="demo/web_home_wall.JPG">
+<img src="demo/home_wall_web.JPG">
