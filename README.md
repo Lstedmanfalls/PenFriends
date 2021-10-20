@@ -6,3 +6,5 @@
 <img src="demo/mobile_login.JPG">
 <h2>Web</h2>
 <img src="demo/web_login.JPG">
+<h1>Seeking PenFriends Wall</h1>
+<img src="demo/web_seeking_wall.JPG">

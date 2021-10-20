@@ -16,7 +16,7 @@ def home(request): #GET REQUEST
         if this_user.recipient_messages:
             unread_messages = this_user.recipient_messages.filter(unread = True)
             unread_message_count = unread_messages.count()
-        all_the_posts = Post.objects.all()
+        all_the_posts = Post.objects.all().order_by("-created_at")
         context = {
         "this_user": this_user,
         "all_the_posts": all_the_posts,

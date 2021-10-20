@@ -43,9 +43,10 @@
                 {% for post in all_the_posts %}
                 <div class="one_post">
                     <div class="post_details">
-                        <h2>{{post.title}}</h2>
+                        <p>{{post.title}}</p>
+                        <p>{{post.created_at.date}}</p>
                         <p>{{post.body}}</p>
-                        <p>Check out <a href="/penfriends/resident/{{post.for_resident.id}}">{{post.for_resident.first_name}} {{post.for_resident.last_name}}'s</a> profile for more info</p>
+                        <a href="/penfriends/resident/{{post.for_resident.id}}">View {{post.for_resident.first_name}} {{post.for_resident.last_name}}'s Profile</a>
                     </div>
                     <div class ="post_pic">
                         {% if post.for_resident.picture %}
@@ -55,7 +56,7 @@
                         <form action="/penfriends/become_penfriend" method="POST">
                         {% csrf_token %}
                             <input name="resident_id" type="hidden" value={{post.for_resident.id}}>
-                            <button type="submit">I want to be {{post.for_resident.first_name}}'s PenFriend</button>
+                            <button type="submit">PenFriend with {{post.for_resident.first_name}}</button>
                         </form>
                         {% endif %}
                     </div>

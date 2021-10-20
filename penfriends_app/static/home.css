@@ -7,30 +7,71 @@
     display: flex;
     justify-content: center;
     flex-wrap:wrap;
+    margin:0 5rem;
 }
 
 .one_post {
     display:flex;
+    justify-content: space-between;
     width:40%;
-    margin:1rem 1rem 1rem 1rem;
-    border:.1rem solid darkgray;
-    padding:2rem;
+    margin:1rem;
+    border:.2rem solid darkgray;
+    padding:1.5rem;
     background-color:white;
 }
 
 .post_details {
-    width:60%;
+    width:65%;
+    font-family:'Times New Roman', Times, serif;
 }
 
-.post_pic {
+.post_details p:first-of-type {
+    font-size:1.8rem;
+    font-weight:bold;
+    padding-bottom:.3rem;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.post_details p:nth-of-type(2){
+    font-style:italic;
+    font-size:1.3rem;
+}
+
+.post_details p:nth-of-type(3){
+    padding-bottom:1rem;
+    padding-top:1rem;
+}
+
+.post_details > a {
+    font-size:1.5rem;
+    font-family: Arial, Helvetica, sans-serif;
+    color:rgb(197, 72, 103);
+}
+
+.post_pic{
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
-    width:40%;
+    align-items: center;
+    justify-content: center;
+    width:30%;
+}
+
+.post_pic button{
+    margin-top:2rem;
+    padding:.5rem;
+    align-self:center;
+    background-color:rgba(197, 72, 103, 0.39);
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.post_pic button:hover{
+    cursor: pointer;
+    background-color:rgba(200, 39, 79,.5);
 }
 
 .one_post img{
-    max-width:25rem;
-    max-height:25rem;
-    border:.1rem solid black;
+    max-width:18rem;
+    max-height:20rem;
+    border:.1rem solid gray;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
