@@ -7,6 +7,7 @@
     <title>PenFriends</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="{% static 'home.css' %}">
 </head>
 <body>
     <div id="wrapper">
@@ -38,31 +39,26 @@
             </nav>
         </div>
         <div id="container">
-            <div>
+            <div id="posts">
                 {% for post in all_the_posts %}
-                <div id="post">
-                    <h2>{{post.title}}</h2>
-                    <p>{{post.body}}</p>
-                    <p>Check out <a href="/penfriends/resident/{{post.for_resident.id}}">{{post.for_resident.first_name}} {{post.for_resident.last_name}}'s</a> profile for more info</p>
-                    {% if post.for_resident.picture %}
-                    <img src={{post.for_resident.picture.url}} alt="{{post.for_resident.first_name}} {{post.for_resident.last_name}}">
-                    {% endif %}
-                    {% if this_user.category == "penpal" %}
-                        {% if post.for_resident not in this_user.penpal_residents.all %}
+                <div class="one_post">
+                    <div class="post_details">
+                        <h2>{{post.title}}</h2>
+                        <p>{{post.body}}</p>
+                        <p>Check out <a href="/penfriends/resident/{{post.for_resident.id}}">{{post.for_resident.first_name}} {{post.for_resident.last_name}}'s</a> profile for more info</p>
+                    </div>
+                    <div class ="post_pic">
+                        {% if post.for_resident.picture %}
+                        <img src={{post.for_resident.picture.url}} alt="{{post.for_resident.first_name}} {{post.for_resident.last_name}}">
+                        {% endif %}
+                        {% if this_user.category == "penpal" and post.for_resident not in this_user.penpal_residents.all %}
                         <form action="/penfriends/become_penfriend" method="POST">
                         {% csrf_token %}
                             <input name="resident_id" type="hidden" value={{post.for_resident.id}}>
                             <button type="submit">I want to be {{post.for_resident.first_name}}'s PenFriend</button>
                         </form>
                         {% endif %}
-                    {% endif %}
-                    {% if messages %}
-                    <div>   
-                        {% for message in messages %}    
-                        <p>{{ message }}</p>    
-                        {% endfor %}
                     </div>
-                    {% endif %}
                 </div>
                 {% endfor %}
             </div>

@@ -180,8 +180,10 @@ def update_resident(request, resident_id):
             update_resident.first_name = request.POST['first_name']
             update_resident.last_name = request.POST['last_name']
             update_resident.bio = request.POST['bio']
-            update_resident.picture = request.FILES['picture']
             update_resident.save()
+            if request.FILES:
+                update_resident.picture = request.FILES['picture']
+                update_resident.save()
         messages.success(request, "Resident info updated successfully!")
         return redirect(f'/penfriends/resident/{resident_id}')   
 

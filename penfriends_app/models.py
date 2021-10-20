@@ -16,7 +16,7 @@ from login_registration_app.models import User
 class Resident(models.Model):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
-    picture = models.ImageField(blank=True, null=True)
+    picture = models.ImageField(default ="default_img.png")
     bio = models.TextField()
     creator = models.ForeignKey(User, related_name="residents", on_delete = models.CASCADE)
     penfriends = models.ManyToManyField(User, related_name="penpal_residents")
