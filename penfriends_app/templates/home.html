@@ -58,6 +58,8 @@
                             <input name="resident_id" type="hidden" value={{post.for_resident.id}}>
                             <button type="submit">PenFriend with {{post.for_resident.first_name}}</button>
                         </form>
+                        {% else %}
+                        <p>You are PenFriends</p>
                         {% endif %}
                     </div>
                 </div>
