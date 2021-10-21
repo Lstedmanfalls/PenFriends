@@ -7,4 +7,4 @@
 <h2>Web</h2>
 <img src="demo/login_web.JPG">
 <h1>Seeking PenFriends Wall</h1>
-<img src="demo/home_wall_web.JPG">
+<img src="demo/home_seeking_wall_web.JPG">
