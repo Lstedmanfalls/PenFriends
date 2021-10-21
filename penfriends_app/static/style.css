@@ -25,12 +25,6 @@ html{
 }
 }
 
-h1{
-    font-size:2rem;
-    font-weight: normal;
-    padding-bottom:3rem;
-}
-
 p{
     font-size:1.5rem;
 }
@@ -38,6 +32,18 @@ p{
 #wrapper{
     display:flex;
 }
+
+/* @media only screen and (max-width:768px){
+    .one_post{
+        font-size:8px;
+    }
+    } */
+    
+    @media only screen and (max-width:480px){
+        #wrapper{
+            flex-direction: column;
+        }
+        }
 
 #side_bar{
     display:flex;
@@ -47,6 +53,23 @@ p{
     padding:1rem 2rem;
 }
 
+/* @media only screen and (max-width:768px){
+    .one_post{
+        font-size:8px;
+    }
+    } */
+    
+    @media only screen and (max-width:480px){
+        #side_bar{
+            min-height: auto;
+            padding:.5rem 1rem;
+            position:fixed;
+            top:0;
+            background-color: white;
+            width:calc(100% - 2.2rem);
+        }
+        }
+
 #logo span{
     font-size:3rem;
     font-family:'Lucida handwriting';
@@ -55,6 +78,7 @@ p{
 
 #logo{
     font-size:2.5rem;
+    max-width:100%;
 }
 
 nav{
@@ -62,14 +86,53 @@ nav{
     flex-direction: column;
 }
 
+/* @media only screen and (max-width:768px){
+    .one_post{
+        font-size:8px;
+    }
+    } */
+    
+    @media only screen and (max-width:480px){
+        nav{
+            flex-direction: row;
+        }
+        }
+
 nav div{
     display: flex;
     padding:2rem 0;
 }
 
+/* @media only screen and (max-width:768px){
+    .one_post{
+        font-size:8px;
+    }
+    } */
+    
+    @media only screen and (max-width:480px){
+        nav div{
+            flex-direction: column;
+            align-items:center;
+            padding:1rem;        
+        }
+    }
+
 nav img{
     padding-right:1rem;
 }
+
+/* @media only screen and (max-width:768px){
+    .one_post{
+        font-size:8px;
+    }
+    } */
+    
+    @media only screen and (max-width:480px){
+        nav img{
+            width:3rem;
+            padding:0;
+        }
+        }
 
 nav a, nav p{
     text-decoration: none;
@@ -81,11 +144,36 @@ nav span{
     font-size:1.5rem;
 }
 
+/* @media only screen and (max-width:768px){
+    .one_post{
+        font-size:8px;
+    }
+    } */
+    
+    @media only screen and (max-width:480px){
+        nav a, nav p, nav span {
+            font-size:1.3rem;
+            text-align: center;
+        }
+        }
+
 #container{
     border-width: .1rem .1rem .1rem 0;
     border-style: solid;
     border-color:darkgrey;
-    width:100%;
-    padding:2rem 2rem;
+    padding:2rem;
     background-color:rgba(227, 235, 243, 0.3);
 }
+
+/* @media only screen and (max-width:768px){
+    .one_post{
+        font-size:8px;
+    }
+    } */
+    
+    @media only screen and (max-width:480px){
+        #container {
+            margin-top:11rem;
+            padding:1.5rem 2rem;
+        }
+        }
