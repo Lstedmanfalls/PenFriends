@@ -78,7 +78,18 @@ p{
 
 #logo{
     font-size:2.5rem;
-    max-width:100%;
+}
+
+/* @media only screen and (max-width:768px){
+    .one_post{
+        font-size:8px;
+    }
+    } */
+    
+@media only screen and (max-width:480px){
+    #logo{
+        align-self:center;
+    }
 }
 
 nav{
@@ -92,11 +103,11 @@ nav{
     }
     } */
     
-    @media only screen and (max-width:480px){
-        nav{
-            flex-direction: row;
-        }
-        }
+@media only screen and (max-width:480px){
+    nav{
+        flex-direction: row;
+    }
+    }
 
 nav div{
     display: flex;
