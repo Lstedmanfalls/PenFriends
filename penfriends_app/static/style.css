@@ -61,12 +61,10 @@ p{
     
     @media only screen and (max-width:480px){
         #side_bar{
-            min-height: auto;
-            padding:.5rem 1rem;
-            position:fixed;
-            top:0;
-            background-color: white;
-            width:calc(100% - 2.2rem);
+            min-height: 2rem;
+            padding:.5rem 0;
+            align-items: center;
+            justify-content: center;
         }
         }
 
@@ -78,18 +76,6 @@ p{
 
 #logo{
     font-size:2.5rem;
-}
-
-/* @media only screen and (max-width:768px){
-    .one_post{
-        font-size:8px;
-    }
-    } */
-    
-@media only screen and (max-width:480px){
-    #logo{
-        align-self:center;
-    }
 }
 
 nav{
@@ -106,6 +92,13 @@ nav{
 @media only screen and (max-width:480px){
     nav{
         flex-direction: row;
+        padding:.5rem 1rem;
+        position:fixed;
+        bottom:0;
+        background-color: white;
+        width:calc(100% - 2.4rem);
+        border-top:.1rem solid darkgray;
+        border-bottom:.1rem solid darkgray;
     }
     }
 
@@ -184,7 +177,7 @@ nav span{
     
     @media only screen and (max-width:480px){
         #container {
-            margin-top:11rem;
-            padding:1.5rem 2rem;
+            padding:1rem 2rem;
+            border-width: 0 .1rem 0 .1rem;
         }
         }
