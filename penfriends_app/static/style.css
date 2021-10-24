@@ -177,7 +177,7 @@ nav span{
     
     @media only screen and (max-width:480px){
         #container {
-            padding:1rem 2rem;
+            padding:1rem 2rem 9rem 2rem;
             border-width: 0 .1rem 0 .1rem;
         }
         }

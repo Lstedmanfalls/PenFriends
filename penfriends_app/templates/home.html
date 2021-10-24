@@ -44,9 +44,9 @@
                 <div class="one_post">
                     <div class="post_details">
                         <p>{{post.title}}</p>
+                        <p>Seeking PenFriend for {{post.for_resident.first_name}} {{post.for_resident.last_name}}</p>
                         <p>{{post.created_at.date}}</p>
                         <p>{{post.body}}</p>
-                        <a href="/penfriends/resident/{{post.for_resident.id}}">View {{post.for_resident.first_name}} {{post.for_resident.last_name}}'s Profile</a>
                     </div>
                     <div class ="post_pic">
                         {% if post.for_resident.picture %}
@@ -56,11 +56,12 @@
                         <form action="/penfriends/become_penfriend" method="POST">
                         {% csrf_token %}
                             <input name="resident_id" type="hidden" value={{post.for_resident.id}}>
-                            <button type="submit">PenFriend with {{post.for_resident.first_name}}</button>
+                            <button type="submit">Add PenFriend</button>
                         </form>
                         {% else %}
                         <p>You are PenFriends</p>
                         {% endif %}
+                        <a href="/penfriends/resident/{{post.for_resident.id}}">View Profile</a>
                     </div>
                 </div>
                 {% endfor %}
