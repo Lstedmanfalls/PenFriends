@@ -95,10 +95,10 @@
             </div>
             <div>
                 <h1>My Posts</h1>
-                {% for resident in this_user.residents.all|dictsortreversed:"created_at" %}
-                    {% for post in resident.res_posts.all %}
+                {% for resident in this_user.residents.all %}
+                    {% for post in resident.res_posts.all|dictsortreversed:"created_at" %}
                     <form action="/penfriends/resident/{{post.id}}/updatepost" method="POST">
-                    {%csrf_token%}
+                    {% csrf_token %}
                         <div>
                             <label for="title">Title</label>
                             <input type="text" name="title" value="{{post.title}}">
