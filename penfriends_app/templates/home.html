@@ -58,7 +58,8 @@
                             <input name="resident_id" type="hidden" value={{post.for_resident.id}}>
                             <button type="submit">Add PenFriend</button>
                         </form>
-                        {% else %}
+                        {% endif %}
+                        {% if this_user.category == "penpal" and post.for_resident in this_user.penpal_residents.all %}
                         <p>You are PenFriends</p>
                         {% endif %}
                         <a href="/penfriends/resident/{{post.for_resident.id}}">View Profile</a>

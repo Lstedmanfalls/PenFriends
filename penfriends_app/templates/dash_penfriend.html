@@ -48,7 +48,7 @@
             {% endif %}
             <div>
                 <h2>My PenFriends</h2>
-                {% for resident in all_the_residents %}
+                {% for resident in all_the_residents|dictsort:"first_name" %}
                 <a href ="/penfriends/resident/{{resident.id}}">{{resident.first_name}} {{resident.last_name}}</a>
                 <form action="/penfriends/dashboard/penpal/remove_penpal" method="POST">
                 {% csrf_token %}

@@ -62,7 +62,7 @@
             </form>
             <div>
                 <h1>My Residents</h1>
-                {% for resident in this_user.residents.all %}
+                {% for resident in this_user.residents.all|dictsort:"first_name" %}
                 <a href='/penfriends/resident/{{resident.id}}'>{{resident.first_name}} {{resident.last_name}}</a>
                 <form action="/penfriends/resident/{{resident.id}}/delete" method="POST">
                     {% csrf_token %}
@@ -81,7 +81,7 @@
                     <div>
                         <label for="for_resident">Choose a resident:</label>
                         <select name="for_resident">
-                            {% for resident in this_user.residents.all%}
+                            {% for resident in this_user.residents.all|dictsort:"first_name" %}
                             <option value="{{resident.id}}">{{resident.first_name}} {{resident.last_name}}</option>
                             {% endfor %}
                         </select>
@@ -95,7 +95,7 @@
             </div>
             <div>
                 <h1>My Posts</h1>
-                {% for resident in this_user.residents.all %}
+                {% for resident in this_user.residents.all|dictsortreversed:"created_at" %}
                     {% for post in resident.res_posts.all %}
                     <form action="/penfriends/resident/{{post.id}}/updatepost" method="POST">
                     {%csrf_token%}
