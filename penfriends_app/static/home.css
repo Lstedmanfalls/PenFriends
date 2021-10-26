@@ -3,11 +3,6 @@ Mobile (< 480px)
 Tablet (480px to 768px)
 PC (>= 769) */
 
-#container{
-    display: flex;
-    flex-direction: column;
-}
-
 #posts{
     display: flex;
     justify-content: center;

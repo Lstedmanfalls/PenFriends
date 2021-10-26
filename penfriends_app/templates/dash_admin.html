@@ -7,6 +7,7 @@
     <title>Admin Dashboard</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="{% static 'admin_dash.css' %}">
 </head>
 <body>
     <div id="wrapper">
@@ -38,91 +39,98 @@
             </nav>
         </div>
         <div id ="container">
-            <h1>Hi, {{this_user.first_name}}</h1>
-            <h1>Add New Resident</h1>
-            <form action="/penfriends/dashboard/admin/createresident" method="POST" enctype="multipart/form-data">
-                {% csrf_token %}
-                <div>
-                    <label for="first_name">First Name</label>
-                    <input type="text" name="first_name">
-                </div>
-                <div>
-                    <label for="last_name">Last Name</label>
-                    <input type="text" name="last_name">
-                </div>
-                <div>
-                    <label for="bio">Bio</label>
-                    <textarea name="bio"></textarea>
-                </div>
-                <div>
-                    <label for="picture">Picture</label>
-                    <input type="file" name="picture" accept="image/*">
-                </div>
-                <button type="submit">Add Resident</button>
-            </form>
-            <div>
-                <h1>My Residents</h1>
-                {% for resident in this_user.residents.all|dictsort:"first_name" %}
-                <a href='/penfriends/resident/{{resident.id}}'>{{resident.first_name}} {{resident.last_name}}</a>
-                <form action="/penfriends/resident/{{resident.id}}/delete" method="POST">
-                    {% csrf_token %}
-                    <button type="submit">Delete</button>
-                </form>
-                {% endfor%}                
-            </div>
-            <div>
-                <h1>Add New Post</h1>
-                <form action="/penfriends/dashboard/admin/createpost" method="POST">
-                    {% csrf_token %}
-                    <div>
-                        <label for="title">Title</label>
-                        <input type="text" name="title">
+            <div id ="content">
+                <div id="residents">
+                    <div id ="add_resident">
+                        <h1>Add New Resident</h1>
+                        <form action="/penfriends/dashboard/admin/createresident" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div>
+                                <label for="first_name">First Name:</label>
+                                <input type="text" name="first_name">
+                            </div>
+                            <div>
+                                <label for="last_name">Last Name:</label>
+                                <input type="text" name="last_name">
+                            </div>
+                            <div>
+                                <label for="bio">Bio:</label>
+                                <textarea name="bio"></textarea>
+                            </div>
+                            <div>
+                                <label for="picture">Picture:</label>
+                                <input type="file" name="picture" accept="image/*">
+                            </div>
+                            <button type="submit">Add Resident</button>
+                        </form>
                     </div>
-                    <div>
-                        <label for="for_resident">Choose a resident:</label>
-                        <select name="for_resident">
-                            {% for resident in this_user.residents.all|dictsort:"first_name" %}
-                            <option value="{{resident.id}}">{{resident.first_name}} {{resident.last_name}}</option>
+                    <div id="my_residents">
+                        <h1>My Residents</h1>
+                        {% for resident in this_user.residents.all|dictsort:"first_name" %}
+                        <a href='/penfriends/resident/{{resident.id}}'>{{resident.first_name}} {{resident.last_name}}</a>
+                        <form action="/penfriends/resident/{{resident.id}}/delete" method="POST">
+                            {% csrf_token %}
+                            <button type="submit">Delete</button>
+                        </form>
+                        {% endfor%}                
+                    </div>
+                </div>
+                <div id="posts">
+                    <div id="add_post">
+                        <h1>Add New Post</h1>
+                        <form action="/penfriends/dashboard/admin/createpost" method="POST">
+                            {% csrf_token %}
+                            <div>
+                                <label for="title">Title:</label>
+                                <input type="text" name="title">
+                            </div>
+                            <div>
+                                <label for="for_resident">Resident:</label>
+                                <select name="for_resident">
+                                    {% for resident in this_user.residents.all|dictsort:"first_name" %}
+                                    <option value="{{resident.id}}">{{resident.first_name}} {{resident.last_name}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div>
+                                <label for="body">Body:</label>
+                                <textarea name="body"></textarea>
+                            </div>
+                            <button type="submit">Add Post</button>  
+                        </form>
+                    </div>
+                    <div id="my_posts">
+                        <h1>My Posts</h1>
+                        {% for resident in this_user.residents.all %}
+                            {% for post in resident.res_posts.all|dictsortreversed:"created_at" %}
+                            <form action="/penfriends/resident/{{post.id}}/updatepost" method="POST">
+                            {% csrf_token %}
+                                <div>
+                                    <label for="title">Title:</label>
+                                    <input type="text" name="title" value="{{post.title}}">
+                                </div>
+                                <p>Resident: {{post.for_resident.first_name}} {{post.for_resident.last_name}}</p>
+                                <div>
+                                    <label for="body">Body:</label>
+                                    <textarea name="body">{{post.body}}</textarea>
+                                </div>
+                                <button type="submit">Update</button>
+                            </form>
+                            <form action="/penfriends/resident/{{post.id}}/deletepost" method="post">
+                                {% csrf_token %}
+                                <button type="submit">Delete</button>
+                            </form>
                             {% endfor %}
-                        </select>
-                    </div>
-                    <div>
-                        <label for="body">Body</label>
-                        <textarea name="body"></textarea>
-                    </div>
-                    <button type="submit">Add Post</button>  
-                </form>
-            </div>
-            <div>
-                <h1>My Posts</h1>
-                {% for resident in this_user.residents.all %}
-                    {% for post in resident.res_posts.all|dictsortreversed:"created_at" %}
-                    <form action="/penfriends/resident/{{post.id}}/updatepost" method="POST">
-                    {% csrf_token %}
-                        <div>
-                            <label for="title">Title</label>
-                            <input type="text" name="title" value="{{post.title}}">
+                        {% endfor %}
+                        {% if messages %}
+                        <div>    
+                            {% for message in messages %}    
+                            <p>{{ message }}</p>    
+                            {% endfor %}
                         </div>
-                        <p>For Resident: {{post.for_resident.first_name}} {{post.for_resident.last_name}}</p>
-                        <div>
-                            <label for="body">Body</label>
-                            <textarea name="body">{{post.body}}</textarea>
-                        </div>
-                        <button type="submit">Update</button>
-                    </form>
-                    <form action="/penfriends/resident/{{post.id}}/deletepost" method="post">
-                        {% csrf_token %}
-                        <button type="submit">Delete</button>
-                    </form>
-                    {% endfor %}
-                {% endfor %}
-                {% if messages %}
-                <div>    
-                    {% for message in messages %}    
-                    <p>{{ message }}</p>    
-                    {% endfor %}
+                    {% endif %}
+                    </div>
                 </div>
-            {% endif %}
             </div>
         </div>
     </div>    

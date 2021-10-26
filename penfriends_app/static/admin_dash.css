@@ -1,0 +1,27 @@
+
+
+#content{
+    display:flex;
+    justify-content: space-between;
+    width:80%;
+    padding-top:1rem;
+}
+
+#residents, #posts{
+    display:flex;
+    justify-content: space-between;
+    width:45%;
+}
+
+h1{
+    padding-bottom:2rem;
+    font-size:2.5rem;
+}
+
+label, a, button{
+    font-size:1.5rem;
+}
+
+textarea{
+    resize: none;
+}
