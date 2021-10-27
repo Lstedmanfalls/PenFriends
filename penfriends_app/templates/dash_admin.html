@@ -40,7 +40,7 @@
         </div>
         <div id ="container">
             <div id ="content">
-                <div id="residents">
+                <div id="add">
                     <div id ="add_resident">
                         <h1>Add New Resident</h1>
                         <form action="/penfriends/dashboard/admin/createresident" method="POST" enctype="multipart/form-data">
@@ -64,18 +64,6 @@
                             <button type="submit">Add Resident</button>
                         </form>
                     </div>
-                    <div id="my_residents">
-                        <h1>My Residents</h1>
-                        {% for resident in this_user.residents.all|dictsort:"first_name" %}
-                        <a href='/penfriends/resident/{{resident.id}}'>{{resident.first_name}} {{resident.last_name}}</a>
-                        <form action="/penfriends/resident/{{resident.id}}/delete" method="POST">
-                            {% csrf_token %}
-                            <button type="submit">Delete</button>
-                        </form>
-                        {% endfor%}                
-                    </div>
-                </div>
-                <div id="posts">
                     <div id="add_post">
                         <h1>Add New Post</h1>
                         <form action="/penfriends/dashboard/admin/createpost" method="POST">
@@ -99,37 +87,47 @@
                             <button type="submit">Add Post</button>  
                         </form>
                     </div>
-                    <div id="my_posts">
-                        <h1>My Posts</h1>
-                        {% for resident in this_user.residents.all %}
-                            {% for post in resident.res_posts.all|dictsortreversed:"created_at" %}
-                            <form action="/penfriends/resident/{{post.id}}/updatepost" method="POST">
+                </div>
+                    <div id="my_residents">
+                        <h1>My Residents</h1>
+                        {% for resident in this_user.residents.all|dictsort:"first_name" %}
+                        <a href='/penfriends/resident/{{resident.id}}'>{{resident.first_name}} {{resident.last_name}}</a>
+                        <form action="/penfriends/resident/{{resident.id}}/delete" method="POST">
                             {% csrf_token %}
-                                <div>
-                                    <label for="title">Title:</label>
-                                    <input type="text" name="title" value="{{post.title}}">
-                                </div>
-                                <p>Resident: {{post.for_resident.first_name}} {{post.for_resident.last_name}}</p>
-                                <div>
-                                    <label for="body">Body:</label>
-                                    <textarea name="body">{{post.body}}</textarea>
-                                </div>
-                                <button type="submit">Update</button>
-                            </form>
-                            <form action="/penfriends/resident/{{post.id}}/deletepost" method="post">
-                                {% csrf_token %}
-                                <button type="submit">Delete</button>
-                            </form>
-                            {% endfor %}
-                        {% endfor %}
-                        {% if messages %}
-                        <div>    
-                            {% for message in messages %}    
-                            <p>{{ message }}</p>    
-                            {% endfor %}
-                        </div>
-                    {% endif %}
+                            <button type="submit">Delete</button>
+                        </form>
+                        {% endfor%}                
                     </div>
+                <div id="my_posts">
+                    <h1>My Posts</h1>
+                    {% for resident in this_user.residents.all %}
+                        {% for post in resident.res_posts.all|dictsortreversed:"created_at" %}
+                        <form action="/penfriends/resident/{{post.id}}/updatepost" method="POST">
+                        {% csrf_token %}
+                            <div>
+                                <label for="title">Title:</label>
+                                <input type="text" name="title" value="{{post.title}}">
+                            </div>
+                            <p>Resident: {{post.for_resident.first_name}} {{post.for_resident.last_name}}</p>
+                            <div>
+                                <label for="body">Body:</label>
+                                <textarea name="body">{{post.body}}</textarea>
+                            </div>
+                            <button type="submit">Update</button>
+                        </form>
+                        <form action="/penfriends/resident/{{post.id}}/deletepost" method="post">
+                            {% csrf_token %}
+                            <button type="submit">Delete</button>
+                        </form>
+                        {% endfor %}
+                    {% endfor %}
+                    {% if messages %}
+                    <div>    
+                        {% for message in messages %}    
+                        <p>{{ message }}</p>    
+                        {% endfor %}
+                    </div>
+                {% endif %}
                 </div>
             </div>
         </div>

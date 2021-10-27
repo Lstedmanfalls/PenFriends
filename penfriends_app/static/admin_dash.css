@@ -1,16 +1,8 @@
-
-
 #content{
     display:flex;
     justify-content: space-between;
     width:80%;
     padding-top:1rem;
-}
-
-#residents, #posts{
-    display:flex;
-    justify-content: space-between;
-    width:45%;
 }
 
 h1{
