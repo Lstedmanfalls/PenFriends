@@ -3,6 +3,15 @@ Mobile (< 480px)
 Tablet (480px to 768px)
 PC (>= 769) */
 
+:root {
+    --logo: rgb(221, 155, 171);
+    --background: rgba(227, 235, 243, 0.3);
+    --button1:rgba(139, 219, 195, 0.884);
+    --button1Hover:rgba(175, 238, 220, 0.856);
+    --button2:rgba(247, 184, 102, 0.548);
+    --button2Hover:rgba(247, 214, 170, 0.568);
+}
+
 *{
     margin:0;
     padding:0;
@@ -71,7 +80,7 @@ p{
 #logo span{
     font-size:3rem;
     font-family:'Lucida handwriting';
-    color:rgb(200, 39, 79);
+    color:var(--logo);
 }
 
 #logo{
@@ -166,7 +175,7 @@ nav span{
     border-style: solid;
     border-color:darkgrey;
     padding:2rem;
-    background-color:rgba(227, 235, 243, 0.3);
+    background-color:var(--background);
     width:100%;
     display:flex;
     flex-direction: column;

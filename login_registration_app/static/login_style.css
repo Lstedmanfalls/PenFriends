@@ -3,6 +3,12 @@ Mobile (< 480px)
 Tablet (480px to 768px)
 PC (>= 769) */
 
+:root {
+    --logo: rgb(221, 155, 171);
+    --button:rgba(66, 66, 66, 0.8);
+    --buttonHover:rgba(66, 66, 66, 1);
+}
+
 *{
     margin:0;
     padding:0;
@@ -34,7 +40,7 @@ header{
 span{
     font-size:4rem;
     font-family:'Lucida handwriting';
-    color:rgb(200, 39, 79);
+    color:var(--logo);
 }
 
 #logo{
@@ -186,10 +192,11 @@ button{
     font-weight: bold;
     align-self:center;
     margin-top:1rem;
-    box-shadow:rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    box-shadow:rgba(0, 0, 0, 0.15) .195rem .195rem .26rem;
     color:white;
-    background-color:rgba(66, 66, 66, 0.8);
+    background-color:var(--button);
     border-radius: 2rem;
+    border:.1rem solid darkgray;
 }
 
 @media only screen and (max-width:480px){
@@ -200,7 +207,7 @@ button{
 
 button:hover{
     cursor:pointer;
-    background-color:rgba(66, 66, 66, 1);
+    background-color:var(--buttonHover);
     color:white;
 }
 

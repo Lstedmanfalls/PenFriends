@@ -135,33 +135,35 @@ PC (>= 769) */
     box-shadow: rgba(0, 0, 0, 0.35) 0 .2rem .5rem;
     font-size:1.4rem;
     padding:.5rem;
+    color:black;
     align-self:center;
-    background-color:rgba(84, 180, 159, 0.486);
+    background-color: rgba(111, 214, 183, 0.884);
+    background-color: var(--button1);
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 .post_pic a {
     font-size:1.4rem;
     font-family: Arial, Helvetica, sans-serif;
-    background-color:rgba(197, 72, 103, 0.39);
     border:.1px solid black;
     box-shadow: rgba(0, 0, 0, 0.35) 0 .2rem .5rem;
     border-radius:.5rem;
     padding:.5rem 1.4rem;
     color:black;
+    background-color:var(--button2);
     text-decoration: none;
-    margin-top:.8rem;
+    margin-top:1rem;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-}
-
-.post_pic button:hover{
-    cursor: pointer;
-    background-color:rgba(84, 180, 159, 0.781);
 }
 
 .post_pic a:hover{
     cursor: pointer;
-    background-color:rgba(204, 57, 94, 0.466);
+    background-color:var(--button2Hover);
+}
+
+.post_pic button:hover{
+    cursor: pointer;
+    background-color:var(--button1Hover);
 }
 
 .one_post img{
@@ -170,7 +172,7 @@ PC (>= 769) */
     margin-top:.5rem;
     border:.1rem solid gray;
     border-radius:.5rem;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px .5rem 1rem;
+    box-shadow: rgba(92, 92, 92, 0.39) 0 .2rem .3rem;
 }
 
 /* @media only screen and (max-width:768px){
