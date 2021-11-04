@@ -137,8 +137,7 @@ PC (>= 769) */
     padding:.5rem;
     color:black;
     align-self:center;
-    background-color: rgba(111, 214, 183, 0.884);
-    background-color: var(--button1);
+    background-color: var(--addButton);
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
@@ -150,20 +149,20 @@ PC (>= 769) */
     border-radius:.5rem;
     padding:.5rem 1.4rem;
     color:black;
-    background-color:var(--button2);
+    background-color:var(--viewButton);
     text-decoration: none;
     margin-top:1rem;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
-.post_pic a:hover{
-    cursor: pointer;
-    background-color:var(--button2Hover);
-}
-
 .post_pic button:hover{
     cursor: pointer;
-    background-color:var(--button1Hover);
+    background-color:var(--addButtonHover);
+}
+
+.post_pic a:hover{
+    cursor: pointer;
+    background-color:var(--viewButtonHover);
 }
 
 .one_post img{

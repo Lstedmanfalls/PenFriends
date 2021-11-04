@@ -5,11 +5,13 @@ PC (>= 769) */
 
 :root {
     --logo: rgb(221, 155, 171);
-    --background: rgba(227, 235, 243, 0.3);
-    --button1:rgba(139, 219, 195, 0.884);
-    --button1Hover:rgba(175, 238, 220, 0.856);
-    --button2:rgba(247, 184, 102, 0.548);
-    --button2Hover:rgba(247, 214, 170, 0.568);
+    --background: rgb(9, 37, 56);
+    --addButton:rgba(139, 219, 195, 0.884);
+    --addButtonHover:rgba(175, 238, 220, 0.856);
+    --viewButton:rgba(247, 184, 102, 0.548);
+    --viewButtonHover:rgba(247, 214, 170, 0.568);
+    --deleteButton:rgba(189, 69, 69, 0.876);
+    --deleteButtonHover:rgba(226, 101, 101, 0.609);
 }
 
 *{

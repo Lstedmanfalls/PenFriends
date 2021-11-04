@@ -107,7 +107,7 @@
                             <label for="body">Body</label>
                             <textarea name="body">{{post.body}}</textarea>
                             <div id="post_actions">
-                                <button type="submit">Update</button>
+                                <button class="update" type="submit">Update</button>
                         </form>
                         <form action="/penfriends/resident/{{post.id}}/deletepost" method="post">
                             {% csrf_token %}
