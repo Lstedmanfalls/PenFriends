@@ -86,7 +86,7 @@
                         {% for resident in this_user.residents.all|dictsort:"first_name" %}
                         <p>{{resident.first_name}} {{resident.last_name}}</p>
                         <div id="my_residents_actions">
-                            <a href='/penfriends/resident/{{resident.id}}'>View</a>
+                            <a class="button" href='/penfriends/resident/{{resident.id}}'>View</a>
                             <form action="/penfriends/resident/{{resident.id}}/delete" method="POST">
                                 {% csrf_token %}
                                 <button type="submit">Delete</button>

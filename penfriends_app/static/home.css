@@ -7,19 +7,7 @@ PC (>= 769) */
     display: flex;
     justify-content: center;
     flex-wrap:wrap;
-    margin:0 2rem;
-}
-
-/* @media only screen and (max-width:768px){
-    #posts{
-        font-size:8px;
-    }
-    } */
-
-@media only screen and (max-width:480px){
-    #posts {
-        margin:0;
-    }
+    width:100%;
 }
 
 .one_post {
@@ -27,8 +15,9 @@ PC (>= 769) */
     justify-content: space-between;
     width:30%;
     margin:1rem;
-    border:.2rem solid darkgray;
-    border-radius:.5rem;
+    border:.2rem solid rgb(226, 226, 226);
+    border-radius:1rem;
+    box-shadow: rgba(0, 0, 0, 0.39) 0 .2rem .3rem;
     padding:1.5rem;
     background-color:white;
 }
@@ -130,29 +119,15 @@ PC (>= 769) */
 
 .post_pic button{
     margin-top:1.5rem;
-    border:.1px solid black;
-    border-radius:.5rem;
-    box-shadow: rgba(0, 0, 0, 0.35) 0 .2rem .5rem;
-    font-size:1.4rem;
-    padding:.5rem;
     color:black;
-    align-self:center;
     background-color: var(--addButton);
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
-.post_pic a {
-    font-size:1.4rem;
-    font-family: Arial, Helvetica, sans-serif;
-    border:.1px solid black;
-    box-shadow: rgba(0, 0, 0, 0.35) 0 .2rem .5rem;
-    border-radius:.5rem;
+.button {
     padding:.5rem 1.4rem;
     color:black;
     background-color:var(--viewButton);
-    text-decoration: none;
     margin-top:1rem;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 .post_pic button:hover{
