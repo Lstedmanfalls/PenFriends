@@ -6,6 +6,7 @@ PC (>= 769) */
 :root {
     --logo: rgb(221, 155, 171);
     --background: rgb(9, 37, 56);
+    --innerdivs:rgba(195, 195, 195, 0.438);
     --addButton:rgba(139, 219, 195, 0.884);
     --addButtonHover:rgba(175, 238, 220, 0.856);
     --viewButton:rgba(247, 184, 102, 0.548);

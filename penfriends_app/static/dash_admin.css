@@ -75,7 +75,7 @@ h1{
 }
 
 #my_posts > div{
-    background-color: rgba(195, 195, 195, 0.438);
+    background-color: var(--innerdivs);
     border-radius:1rem;
 }
 
@@ -96,6 +96,12 @@ label, #content a, button{
 input, textarea, select{
     font-family: 'Times New Roman', Times, serif;
     padding:.5rem;
+    background-color: var(--innerdivs);
+    border:.2rem solid darkgrey;
+}
+
+#my_posts input, #my_posts textarea, #my_posts select{
+    background-color: white;
 }
 
 input, textarea, select, button, #my_posts p{

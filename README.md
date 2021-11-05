@@ -13,10 +13,10 @@
 <img src="demo/home_wall_mobile.JPG">
 <h1>Admin Dashboard</h1>
 <h2>Web</h2>
-<img src="demo/admin_dash_web.JPG">
+<img src="demo/dash_admin_web.JPG">
 <h2>Mobile</h2>
-<img src="demo/admin_dash_mobile.JPG">
+<img src="demo/dash_admin_mobile.JPG">
 <br>
-<img src="demo/admin_dash_mobile_2.JPG">
+<img src="demo/dash_admin_mobile_2.JPG">
 <br>
-<img src="demo/admin_dash_mobile_3.JPG">
+<img src="demo/dash_admin_mobile_3.JPG">
