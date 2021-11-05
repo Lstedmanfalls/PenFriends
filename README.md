@@ -16,5 +16,5 @@
 <img src="demo/admin_dash_web.JPG">
 <h2>Mobile</h2>
 <img src="demo/admin_dash_mobile.JPG">
-<img src="demo/admin_dash_2_mobile.JPG">
-<img src="demo/admin_dash_3_mobile.JPG">
+<img src="demo/admin_dash_mobile_2.JPG">
+<img src="demo/admin_dash_mobile_3.JPG">
