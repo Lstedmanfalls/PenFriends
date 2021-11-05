@@ -1,26 +1,77 @@
+/* Mobile responsiveness breakpoints: 
+Mobile (< 480px)
+Tablet (480px to 768px)
+PC (>= 769) */
+
 #content{
     display:flex;
     justify-content: space-between;
-    width:calc(100% - 2rem);
+    width:80%;
     padding:1rem;
 }
 
+@media only screen and (max-width:480px){
+    #content{
+        width:100%;
+        flex-direction: column;
+}
+}
+
 h1{
-    padding-bottom:2rem;
+    padding-bottom:1.5rem;
     font-size:2.5rem;
     font-family:Arial, Helvetica, sans-serif;
     text-align: center;
 }
 
+#add{
+    width:30%
+}
+
+@media only screen and (max-width:480px){
+    #add{
+        width:100%;
+        margin-bottom:3rem;
+    }
+}
+
 #add_resident, #my_residents, #add_post, #my_posts{
-    padding:2rem;
+    padding:1rem 2rem;
     border:.2rem solid rgb(226, 226, 226);
     border-radius:1rem;
     box-shadow: rgba(0, 0, 0, 0.39) 0 .2rem .3rem;
+    background-color: white;
 }
 
-#add_resident, #add_post, #my_posts, #my_residents{
-    background-color: white;
+#add_resident{
+    margin-bottom:3rem;
+}
+
+#my_residents{
+    height:max-content;
+    width:15%;
+}
+
+@media only screen and (max-width:480px){
+    #my_residents{
+        margin-bottom:3rem;
+    }
+}
+
+#my_posts{
+    width:40%;
+}
+
+@media only screen and (max-width:480px){
+    #my_posts{
+        margin-bottom:1rem;
+    }
+}
+
+@media only screen and (max-width:480px){
+    #add_resident, #my_residents, #add_post, #my_posts{
+        width:calc(100% - 4rem);
+    }
 }
 
 #my_posts > div{
@@ -31,23 +82,6 @@ h1{
 #add_resident form, #add_post form, #my_posts form{
     display: flex;
     flex-direction: column;
-}
-
-#add_resident{
-    margin-bottom:3rem;
-}
-
-#add{
-    width:35%
-}
-
-#my_residents{
-    height:max-content;
-    width:16%;
-}
-
-#my_posts{
-    width: 40%;
 }
 
 label{
@@ -90,16 +124,13 @@ button, #content a, input[type=file]::file-selector-button{
     border:.1rem solid black;
 }
 
-#add_resident button{
+#add_resident button, #add_post button{
     background-color: var(--addButton);
+    margin-top:1rem;
 }
 
 #add_resident button:hover{
     background-color: var(--addButtonHover);
-}
-
-#add_post button{
-    background-color: var(--addButton);
 }
 
 #add_post button:hover{
@@ -111,6 +142,10 @@ button, #content a, input[type=file]::file-selector-button{
     text-align: center;
     font-size:1.8rem;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+#my_residents a{
+    margin-bottom:1.5rem;
 }
 
 #my_residents_actions{
@@ -157,10 +192,6 @@ button, #content a, input[type=file]::file-selector-button{
 
 #my_posts .update:hover{
     background-color:var(--addButtonHover);
-}
-
-#content a{
-    margin-bottom:2rem;
 }
 
 #one_post{

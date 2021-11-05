@@ -11,7 +11,7 @@ PC (>= 769) */
     --viewButton:rgba(247, 184, 102, 0.548);
     --viewButtonHover:rgba(247, 214, 170, 0.568);
     --deleteButton:rgba(189, 69, 69, 0.876);
-    --deleteButtonHover:rgba(226, 101, 101, 0.609);
+    --deleteButtonHover:rgb(0, 0, 0);
 }
 
 *{
@@ -53,26 +53,28 @@ p{
 @media only screen and (max-width:480px){
     #wrapper{
         flex-direction: column;
+        width:100%;
     }
 }
 
 #side_bar{
     display:flex;
     flex-direction: column;
-    border:.1rem solid darkgrey;
     min-height:calc(100vh - 2.2rem);
+    border:.1rem solid darkgray;
     padding:1rem 2rem;
 }
 
-/* @media only screen and (max-width:768px){
-    .one_post{
-        font-size:8px;
+@media only screen and (max-width:768px){
+    #side_bar{
+        width:20%;
     }
-    } */
+    }
     
 @media only screen and (max-width:480px){
     #side_bar{
         min-height: 2rem;
+        width:calc(100% - .2rem);
         padding:.5rem 0;
         align-items: center;
         justify-content: center;
@@ -93,36 +95,25 @@ nav{
     display:flex;
     flex-direction: column;
 }
-
-/* @media only screen and (max-width:768px){
-    .one_post{
-        font-size:8px;
-    }
-    } */
     
 @media only screen and (max-width:480px){
     nav{
         flex-direction: row;
-        padding:.5rem 1rem;
-        position:fixed;
-        bottom:0;
+        padding: 0.5rem 0;
+        position: fixed;
+        bottom: 0;
         background-color: white;
-        width:calc(100% - 2.4rem);
-        border-top:.1rem solid darkgray;
-        border-bottom:.1rem solid darkgray;
+        justify-content: space-evenly;
+        border:.1rem solid darkgray;    
+        width:calc(100% - .2rem);
     }
 }
 
 nav div{
     display: flex;
     padding:2rem 0;
+    width:15%;
 }
-
-/* @media only screen and (max-width:768px){
-    .one_post{
-        font-size:8px;
-    }
-    } */
     
 @media only screen and (max-width:480px){
     nav div{
@@ -135,12 +126,6 @@ nav div{
 nav img{
     padding-right:1rem;
 }
-
-/* @media only screen and (max-width:768px){
-    .one_post{
-        font-size:8px;
-    }
-    } */
     
 @media only screen and (max-width:480px){
     nav img{
@@ -173,9 +158,6 @@ nav span{
 }
 
 #container{
-    border-width: .1rem .1rem .1rem 0;
-    border-style: solid;
-    border-color:darkgrey;
     padding:2rem;
     background-color:var(--background);
     width:100%;
@@ -194,7 +176,6 @@ nav span{
     #container {
         padding:1rem 2rem 9rem 2rem;
         width:calc(100% - 4rem);
-        border-width: 0 .1rem 0 .1rem;
     }
 }
 

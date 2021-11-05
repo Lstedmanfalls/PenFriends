@@ -22,15 +22,14 @@ PC (>= 769) */
     background-color:white;
 }
 
-/* @media only screen and (max-width:768px){
+@media only screen and (max-width:768px){
     .one_post{
-        font-size:8px;
+        width:100%;
     }
-    } */
+    }
     
 @media only screen and (max-width:480px){
 .one_post{
-    width:100%;
     margin:1rem 0;
     flex-direction: column;
     }
