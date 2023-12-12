@@ -19,7 +19,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path("", include("login_registration_app.urls")), # localhost is the starting root for login / reg
-    path("penfriends", include("penfriends_app.urls")) # penfriends is the starting root for all penfriends stuff
+    path("penfriends/", include("penfriends_app.urls")) # penfriends is the starting root for all penfriends stuff
 ]
 
 if settings.DEBUG:
